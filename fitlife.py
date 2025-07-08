@@ -2,12 +2,9 @@
 
 import datetime
 
-# from src.dataManager import DataManager
 from src.activity import Activity
 from src.activityManager import ActivityManager
-from src.user import User
 from src.userProfile import Profile
-from src.goal import Goal
 from src.emergencyContact import EmergencyContact
 from src.nutrition import Nutrition
 from src.nutritionManager import NutritionManager
@@ -17,11 +14,12 @@ from src.leaderboard import Leaderboard
 from src.fitnessTracker import FitnessTracker
 from src.smartwatch import Smartwatch
 from src.notification import Notification
-from src.notificationManager import NotificationManager
+# from src.notificationManager import NotificationManager
 from src.progressReport import ProgressReport
 from src.login import Login
-from src.itSecurityOfficer import ITSecurityOfficer
 from src.deviceManager import DeviceManager
+
+from src.goal import goalMenu
 
 
 
@@ -57,7 +55,7 @@ def main_menu(user):
             break
 
         elif choice == "1":
-            Goal.goalMenu(user)
+            goalMenu(user)
 
         elif choice == "2":
             print("\n1. Track Activity\n2. View Activities")
@@ -260,16 +258,16 @@ def main_menu(user):
 def start_app():
     while True:
         user = Login.loginMenu()
-        
-        if isinstance(user, ITSecurityOfficer):
+        if type(user).__name__ == "ITSecurityOfficer":
             user.it_security_menu(user)
             break
-        elif isinstance(user, User):
+        elif type(user).__name__ == "User":
             main_menu(user)
             break
-        
         else:
             print("Invalid login. Please try again.")
 
 if __name__ == "__main__":
     start_app()
+    
+    
