@@ -53,7 +53,7 @@ def goalMenu(user):
                 continue
 
             goal = Goal(
-                goal_id=1,  # This should be unique
+                goal_id=int(len(user.goals)) + 1,
                 goal_name="User Goal", # ask user
                 goal_type=goal_type,
                 goal_value=goal_value,
