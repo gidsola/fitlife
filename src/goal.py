@@ -10,7 +10,12 @@ class Goal:
         self.frequency = frequency
         self.start_date = datetime.date.fromisoformat(start_date) if isinstance(start_date, str) else start_date
         self.end_date = datetime.date.fromisoformat(end_date) if isinstance(end_date, str) else end_date
-        
+     
+    def __str__(self):
+        return (f"Goal ID: {self.goal_id}, Name: {self.goal_name}, Type: {self.goal_type}, "
+                f"Value: {self.goal_value}, Frequency: {self.frequency}, "
+                f"Start Date: {self.start_date.isoformat()}, End Date: {self.end_date.isoformat()}")
+           
 
     def validate_goal(self):
         if not self.goal_type or not self.goal_value:

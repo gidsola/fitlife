@@ -94,16 +94,27 @@ class User:
     def getUser(userid: int) -> 'User':
         """Returns a User object."""
         try:
-            user = User.retrieveUserIfValid(userid)
-            if user is None:
+            userDict = User.retrieveUserIfValid(userid)
+            if userDict is None:
                 raise ValueError(f"User with ID {userid} not found.")
             
-            for goal in user["goals"]:
-                goal = Goal(**goal)
+            new_user = User(**{
+                "user_id": userDict["user_id"],
+                "name": userDict["name"],
+                "email": userDict["email"],
+                "password": userDict["password"],
+                "goals": None,
+                # "emergency_contact": None,  # EmergencyContact(**user.get("emergency_contact", {})),
+                "profile": None
+            })
+            
+            for goal in userDict["goals"]:
+                new_user.goals.append(Goal(**goal))
+                
             
             # user.emergency_contact = EmergencyContact(**user.get("emergency_contact", {}))
-            user["profile"] = Profile(**user["profile"])
-            return User(**user)
+            new_user.profile = Profile(**userDict["profile"])
+            return new_user
         
         except ValueError as e:
             print(f"\nError retrieving user: {e}\n")
