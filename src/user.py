@@ -1,5 +1,5 @@
 
-
+import datetime
 
 from src.dataManager import DataManager
 # from src.itSecurityOfficer import ITSecurityOfficer
@@ -28,6 +28,7 @@ class User:
 
     
 
+    #########TODO: move these...
     # def view_progress_report(self, report):
     #     print(f"Progress Report for {self.name} on {report.report_date}: Report ID {report.report_id}")
 
@@ -39,6 +40,8 @@ class User:
     #     self.profile = profile
     #     print(f"Profile updated for user {self.name}.")
         
+        
+    
     @staticmethod
     def getUser(userid: int) -> 'User':
         """Returns a User object."""
@@ -68,9 +71,8 @@ class User:
         
         user = User(user_id, name, email, password)
         profile = Profile.create_profile()
-        goal =None
         user.profile = profile
-        user.goals = goal
+        user.goals = []
         DataManager.save_to_file(user.to_dict(user))
         return user
     
@@ -99,17 +101,17 @@ class User:
 
     @staticmethod
     def to_dict(user: 'User') -> dict:
-        # def serialize_goal(goal):
-        #     if not goal:
-        #         return None
-        #     d: dict[str, any] = vars(goal)
+        def serialize_goal(goal):
+            if not goal:
+                return None
+            d: dict[str, any] = vars(goal)
             
-        #     if isinstance(d.get("start_date"), datetime.date):
-        #         d["start_date"] = d["start_date"].isoformat()
+            if isinstance(d.get("start_date"), datetime.date):
+                d["start_date"] = d["start_date"].isoformat()
             
-        #     if isinstance(d.get("end_date"), datetime.date):
-        #         d["end_date"] = d["end_date"].isoformat()
-        #     return d
+            if isinstance(d.get("end_date"), datetime.date):
+                d["end_date"] = d["end_date"].isoformat()
+            return d
 
         def serialize(obj):
             return vars(obj) if obj else None
@@ -120,7 +122,7 @@ class User:
             "email": user.email,
             "password": user.password,
             # reconsider these
-            # "goal": serialize_goal(user.goal),
+            "goals": [],#serialize_goal(user.goal),
             # "emergency_contact": serialize(user.emergency_contact),
             "profile": serialize(user.profile)
         }
