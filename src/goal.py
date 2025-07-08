@@ -4,9 +4,9 @@ import datetime
 # from src.user import User
 
 class Goal:
-    def __init__(self, goal_id, name, goal_type, goal_value, frequency, start_date, end_date):
+    def __init__(self, goal_id, goal_name, goal_type, goal_value, frequency, start_date, end_date):
         self.goal_id = goal_id
-        self.name = name,
+        self.goal_name = goal_name
         self.goal_type = goal_type
         self.goal_value = goal_value
         self.frequency = frequency
@@ -23,15 +23,17 @@ class Goal:
             return False
         return True
     
-    def set_goal(self, goal):
-        goal = Goal(goal_id=goal.goal_id, goal_type=goal.goal_type, goal_value=goal.goal_value, frequency=goal.frequency, start_date=goal.start_date, end_date=goal.end_date)
-        
-        print(f"Goal set for user {self.name}: {goal.goal_type} - {goal.goal_value}")
+    def set_goal(self, user, goal):
+        goal = Goal(goal_id=goal.goal_id, goal_name = goal.goal_name, goal_type=goal.goal_type, goal_value=goal.goal_value, frequency=goal.frequency, start_date=goal.start_date, end_date=goal.end_date)
+        user.goals.append(goal)
+        user.save_user()
+        print(f"Goal set for user {user.name}: {goal.goal_type} - {goal.goal_value}")
     
-    def goalMenu(self):
+    def goalMenu(user):
         while True:
-            print("\n1. Set Goal")
-            print("\n2. View Goal")
+            print("1. Set Goal")
+            print("2. View Goal")
+            print("X. Exit")
             sub = input("Select: ")
 
             if sub == "1":
@@ -51,7 +53,7 @@ class Goal:
 
                 goal = Goal(
                     goal_id=1,  # This should be unique
-                    name="User Goal",
+                    goal_name="User Goal", # ask user
                     goal_type=goal_type,
                     goal_value=goal_value,
                     frequency=frequency,
@@ -59,18 +61,22 @@ class Goal:
                     end_date=end_date
                 )
                 if goal.validate_goal():
-                    goal.set_goal(goal)
+                    goal.set_goal(user, goal)
                 else:
                     print("Invalid goal.")
 
                 input("Press Enter to continue...")
 
             elif sub == "2":
-                if self:
-                    print(self)
+                if user.goals:
+                    print(user.goals) 
                 else:
                     print("No goal set.")
 
                 input("Press Enter to continue...")
+                
+            elif sub == "X" or sub.lower() == "x":
+                print("Exiting goal menu.")
+                break
                 
    

@@ -76,6 +76,11 @@ class User:
         DataManager.save_to_file(user.to_dict(user))
         return user
     
+    def save_user(self) -> None:
+        """Saves the user's current information."""
+        DataManager.save_to_file(User.to_dict(self), f"data/user_{self.user_id}.json")
+        print(f"User {self.user_id} saved: Name={self.name}, Email={self.email}")
+    
     
     def update_user(self, name=None, email=None, password=None) -> None:
         """Updates the user's information."""
@@ -90,17 +95,13 @@ class User:
     
     def delete_user(self) -> None:
         print(f"User {self.user_id} deleted: Name={self.name}, Email={self.email}")
-        self.user_id = None
-        self.name = None
-        self.email = None
-        self.password = None
-        # self.goal = None
-        # self.emergency_contact = None
-        self.profile = None
-    
+        self = None
+        # do more proper implement
+
 
     @staticmethod
     def to_dict(user: 'User') -> dict:
+        """Converts User objects to dictionary representations."""
         def serialize_goal(goal):
             if not goal:
                 return None
@@ -108,25 +109,21 @@ class User:
             
             if isinstance(d.get("start_date"), datetime.date):
                 d["start_date"] = d["start_date"].isoformat()
-            
             if isinstance(d.get("end_date"), datetime.date):
                 d["end_date"] = d["end_date"].isoformat()
             return d
-
-        def serialize(obj):
-            return vars(obj) if obj else None
 
         return {
             "user_id": user.user_id,
             "name": user.name,
             "email": user.email,
             "password": user.password,
-            # reconsider these
-            "goals": [],#serialize_goal(user.goal),
-            # "emergency_contact": serialize(user.emergency_contact),
-            "profile": serialize(user.profile)
+            "goals": [serialize_goal(goal) for goal in user.goals],
+            # "emergency_contact": user.emergency_contact,
+            "profile": user.profile if user.profile else None
         }
         
+    
     @staticmethod
     def validateUserId(user_id: int):
         """Checks if the user ID is valid, returning a user dictionary if found."""
