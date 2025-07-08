@@ -4,7 +4,7 @@
 from src.dataManager import DataManager
 # from src.itSecurityOfficer import ITSecurityOfficer
 from src.userProfile import Profile
-# from src.goal import Goal
+from src.goal import Goal
 # from src.emergencyContact import EmergencyContact
 
 
@@ -16,19 +16,17 @@ class User:
         email (str): Email address of the user.
         password (str): Password for the user's account.
     """
-    def __init__(self, user_id: int, name: str, email: str, password: str, profile: Profile = None):
+    def __init__(self, user_id: int, name: str, email: str, password: str, goals: list[Goal] = None, profile: Profile = None):
         self.user_id = user_id
         self.name = name
         self.email = email
         self.password = password
         
-        # self.goal = None
+        self.goals = goals if goals is not None else []  # List of Goal objects
         # self.emergency_contact = None
         self.profile = profile
 
-    # def set_goal(self, goal):
-    #     self.goal = goal
-    #     print(f"Goal set for user {self.name}: {goal.goal_type} - {goal.goal_value}")
+    
 
     # def view_progress_report(self, report):
     #     print(f"Progress Report for {self.name} on {report.report_date}: Report ID {report.report_id}")
@@ -70,8 +68,9 @@ class User:
         
         user = User(user_id, name, email, password)
         profile = Profile.create_profile()
+        goal =None
         user.profile = profile
-        
+        user.goals = goal
         DataManager.save_to_file(user.to_dict(user))
         return user
     
@@ -138,27 +137,6 @@ class User:
         if user is None:
             return None
         return user
-    
-
-    def __str__(self) -> str:
-        return f"User ID: {self.user_id}, Name: {self.name}, Email: {self.email}"
-    
-    def __repr__(self) -> str:
-        return f"User({self.user_id}, {self.name}, {self.email})"
-    
-    def __eq__(self, other):
-        if isinstance(other, User):
-            return self.user_id == other.user_id
-        return False
-    
-    def __hash__(self) -> int:
-        return hash(self.user_id)
-    
-
-    
-    
-    
-    
     
 
     

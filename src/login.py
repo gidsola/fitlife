@@ -14,7 +14,7 @@ class Login:
     def manageSession(self, user: User):
         print(f"Managing session for user: {user.name}")
         
-    def loginMenu():
+    def loginMenu() -> User | ITSecurityOfficer | None:
         print("Welcome to FitLife!")
         print("1. User Login")
         print("2. IT Security Officer Login")
@@ -46,9 +46,9 @@ class Login:
         elif choice == "2":
             officer_id = input("Officer ID: ")
             name = input("Name: ")
-
-            security_officer = ITSecurityOfficer(officer_id=officer_id, name=name, contact_info="security@example.com")
+            security_officer = ITSecurityOfficer(officer_id=int(officer_id), name=name, contact_info="security@example.com")
             print("IT Security Officer login successful!")
+            print(f"security_officer type: {type(security_officer)}")
             return security_officer
 
         elif choice == "3":

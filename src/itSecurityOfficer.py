@@ -2,12 +2,24 @@
 from src.user import User
 # from src.dataManager import DataManager
 
-class ITSecurityOfficer:
-    def __init__(self, officer_id, name, contact_info):
+class ITSecurityOfficer(User):
+    def __init__(self, officer_id: int, name: str, contact_info: str):
+        """Initializes an IT Security Officer with an officer ID, name, and contact information."""
+        
+        if officer_id is None or name is None or contact_info is None:
+            raise ValueError("Officer ID, name, and contact information cannot be None.")
+        if not isinstance(officer_id, int):
+            raise ValueError("Officer ID must be an integer.")
+        if not isinstance(name, str) or not isinstance(contact_info, str):
+            raise ValueError("Name and contact information must be strings.")
+
+        super().__init__(user_id=officer_id, name=name, email=contact_info, password=None, profile=None, goals=None)
+
         self.officer_id = officer_id
         self.name = name
         self.contact_info = contact_info
-        
+
+
     @staticmethod
     def it_security_menu(security_officer: 'ITSecurityOfficer'):
         while True:
@@ -44,14 +56,14 @@ class ITSecurityOfficer:
             elif choice == "4":
                 user_id = input("Enter User ID to audit security compliance: ")
                 security_officer.audit_security_compliance(int(user_id))
-                
+
             elif choice == "N" or choice.lower() == "n":
                 print("Creating a new user...")
                 user_id = input("Enter User ID: ")
                 name = input("Enter Name: ")
                 email = input("Enter Email: ")
                 password = input("Enter Password: ")
-                
+
                 try:
                     new_user = User.create_user(int(user_id), name, email, password)
                     print(f"New user created successfully: {new_user.name}")
@@ -69,14 +81,14 @@ class ITSecurityOfficer:
                 raise ValueError("User ID must be an integer.")
             if userid is None:
                 raise ValueError("User ID cannot be None.")
-            
+
             user = User.getUser(userid)
             if user is None:
                 raise ValueError(f"User with ID {userid} not found.")
-            
+
             print(f"\nEnforcing security policies for user: {user.name}")
             return True
-        
+
         except ValueError as e:
             print(f"\nError enforcing security policies: {e}\n")
             return False
@@ -90,14 +102,14 @@ class ITSecurityOfficer:
                 raise ValueError("User ID must be an integer.")
             if userid is None:
                 raise ValueError("User ID cannot be None.")
-            
+
             user = User.getUser(userid)
             if user is None:
                 raise ValueError(f"User with ID {userid} not found.")
-            
+
             print(f"Managing data encryption for user: {user.name}")
             return True
-        
+
         except ValueError as e:
             print(f"\nError managing data encryption: {e}\n")
             return False
@@ -108,14 +120,14 @@ class ITSecurityOfficer:
                 raise ValueError("User ID must be an integer.")
             if userid is None:
                 raise ValueError("User ID cannot be None.")
-            
+
             user = User.getUser(userid)
             if user is None:
                 raise ValueError(f"User with ID {userid} not found.")
-            
+
             print(f"Auditing security compliance for user: {user.name}")
             return True
-        
+
         except ValueError as e:
             print(f"\nError auditing security compliance: {e}\n")
             return False

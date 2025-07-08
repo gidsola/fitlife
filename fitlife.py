@@ -57,39 +57,7 @@ def main_menu(user):
             break
 
         elif choice == "1":
-            print("\n1. Set Goal\n2. View Goal")
-            sub = input("Select: ")
-
-            if sub == "1":
-                goal_type = input("Goal type (e.g., Steps): ")
-                goal_value = int(input("Goal value (e.g., 10000): "))
-                frequency = input("Frequency (e.g., Daily): ")
-                start_date = input("Start date (YYYY-MM-DD): ")
-                end_date = input("End date (YYYY-MM-DD): ")
-
-                try:
-                    datetime.date.fromisoformat(start_date)
-                    datetime.date.fromisoformat(end_date)
-                except ValueError:
-                    print("Invalid date format. Please use YYYY-MM-DD.")
-                    input("Press Enter to continue...")
-                    continue
-
-                goal = Goal(goal_id=1, goal_type=goal_type, goal_value=goal_value, frequency=frequency, start_date=start_date, end_date=end_date)
-                if goal.validate_goal():
-                    user.set_goal(goal)
-                else:
-                    print("Invalid goal.")
-
-                input("Press Enter to continue...")
-
-            elif sub == "2":
-                if user.goal:
-                    print(f"Goal: {user.goal.goal_type} - {user.goal.goal_value}, {user.goal.frequency}, {user.goal.start_date} to {user.goal.end_date}")
-                else:
-                    print("No goal set.")
-
-                input("Press Enter to continue...")
+            Goal.goalMenu(user)
 
         elif choice == "2":
             print("\n1. Track Activity\n2. View Activities")
@@ -288,16 +256,20 @@ def main_menu(user):
 
             input("Press Enter to continue...")
 
+
 def start_app():
-    user = None
-    while not user:
+    while True:
         user = Login.loginMenu()
-        if isinstance(user, User):
-            main_menu(user)
-        elif isinstance(user, ITSecurityOfficer):
-            ITSecurityOfficer.it_security_menu(user)
-        else:
+        
+        if isinstance(user, ITSecurityOfficer):
+            user.it_security_menu(user)
             break
+        elif isinstance(user, User):
+            main_menu(user)
+            break
+        
+        else:
+            print("Invalid login. Please try again.")
 
 if __name__ == "__main__":
     start_app()
