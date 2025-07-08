@@ -27,7 +27,7 @@ To set up FitLife locally, follow these steps:
     ```
 3. **Launch the application:**
     ```bash
-    python main.py
+    python fitlife.py
     ```
 
 ## Contributing
