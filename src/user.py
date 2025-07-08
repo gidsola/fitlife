@@ -98,14 +98,8 @@ class User:
             if user is None:
                 raise ValueError(f"User with ID {userid} not found.")
             
-            for goal in user.get("goals", []):
-                if isinstance(goal, dict):
-                    goal = Goal(**goal)
-                    user["goals"].append(goal)
-                elif isinstance(goal, Goal):
-                    user["goals"].append(goal)
-                elif not isinstance(goal, Goal):
-                    raise TypeError("Goal must be a Goal object or a dictionary.")
+            for goal in user["goals"]:
+                goal = Goal(**goal)
             
             # user.emergency_contact = EmergencyContact(**user.get("emergency_contact", {}))
             user["profile"] = Profile(**user["profile"])

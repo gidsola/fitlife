@@ -69,8 +69,9 @@ def goalMenu(user):
             input("Press Enter to continue...")
 
         elif sub == "2":
-            if user.goals:
-                print(user.goals) 
+            if len(user.goals) > 0:
+                for goal in user.goals:
+                    print(goal)
             else:
                 print("No goal set.")
 
