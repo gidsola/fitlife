@@ -19,6 +19,7 @@ from src.progressReport import ProgressReport
 from src.login import Login
 from src.deviceManager import DeviceManager
 
+from src.itSecurityOfficer import it_security_menu
 from src.goal import goalMenu
 
 
@@ -259,7 +260,7 @@ def start_app():
     while True:
         user = Login.loginMenu()
         if type(user).__name__ == "ITSecurityOfficer":
-            user.it_security_menu(user)
+            it_security_menu(user)
             break
         elif type(user).__name__ == "User":
             main_menu(user)
