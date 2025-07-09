@@ -27,3 +27,7 @@ class Profile:
 
         return Profile(int(age), float(height), float(weight))
     
+
+    # def set_profile(self, profile):
+    #     self.profile = profile
+    #     print(f"Profile updated for user {self.name}.")

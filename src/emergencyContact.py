@@ -14,3 +14,6 @@ class EmergencyContact:
         print(f"Notifying {self.name} at {self.phone_number}: {message}")
         
         
+    # def set_emergency_contact(self, contact):
+    #     self.emergency_contact = contact
+    #     print(f"Emergency contact set for user {self.name}: {contact.name} ({contact.relationship})")

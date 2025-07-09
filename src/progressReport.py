@@ -16,3 +16,5 @@ class ProgressReport:
         plt.show()
         
         
+    # def view_progress_report(self, report):
+    #     print(f"Progress Report for {self.name} on {report.report_date}: Report ID {report.report_id}")

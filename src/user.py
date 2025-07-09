@@ -6,7 +6,6 @@ from src.userProfile import Profile
 from src.goal import Goal
 # from src.emergencyContact import EmergencyContact
 
-
 class User:
     """Represents a user in the FitLife application.
     Attributes:
@@ -16,64 +15,59 @@ class User:
         password (str): Password for the user's account.
     """
     def __init__(self, user_id: int, name: str, email: str, password: str, goals: list[Goal] = None, profile: Profile = None):
+        if not isinstance(user_id, int):
+            raise ValueError("User ID must be an integer.")
+        if not isinstance(name, str) or not isinstance(email, str) or not isinstance(password, str):
+            raise ValueError("Name, email, and password must be strings.")
+        
         self.user_id = user_id
         self.name = name
         self.email = email
         self.password = password
-        
-        self.goals = goals if goals is not None else []  # List of Goal objects
+        self.goals = goals
         # self.emergency_contact = None
         self.profile = profile
-
-    
-
-    #########TODO: move these...
-    # def view_progress_report(self, report):
-    #     print(f"Progress Report for {self.name} on {report.report_date}: Report ID {report.report_id}")
-
-    # def set_emergency_contact(self, contact):
-    #     self.emergency_contact = contact
-    #     print(f"Emergency contact set for user {self.name}: {contact.name} ({contact.relationship})")
-
-    # def set_profile(self, profile):
-    #     self.profile = profile
-    #     print(f"Profile updated for user {self.name}.")
         
-    
     @staticmethod
     def to_dict(user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
+        try:
+            if not isinstance(user, User):
+                raise ValueError("Input must be a User object.")
+            if user is None:
+                raise ValueError("User cannot be None.")
         
-        def serialize_goal(goal):
-            if not goal:
-                return None
-            d = vars(goal)
-            
-            if isinstance(d.get("start_date"), datetime.date):
-                d["start_date"] = d["start_date"].isoformat()
-            if isinstance(d.get("end_date"), datetime.date):
-                d["end_date"] = d["end_date"].isoformat()
-            return d
+            def serialize_goal(goal):
+                if not goal:
+                    return None
+                d = vars(goal)
+                if isinstance(d.get("start_date"), datetime.date):
+                    d["start_date"] = d["start_date"].isoformat()
+                if isinstance(d.get("end_date"), datetime.date):
+                    d["end_date"] = d["end_date"].isoformat()
+                return d
         
-        def serialize_profile(profile):
-            if not profile:
-                return None
-            return {
-                "age": profile.age,
-                "height": profile.height,
-                "weight": profile.weight
-            }
+            def serialize_profile(profile):
+                if not profile:
+                    return None
+                return {
+                    "age": profile.age,
+                    "height": profile.height,
+                    "weight": profile.weight
+                }
 
-        return {
-            "user_id": user.user_id,
-            "name": user.name,
-            "email": user.email,
-            "password": user.password,
-            "goals": [serialize_goal(goal) for goal in user.goals],
-            # "emergency_contact": user.emergency_contact,
-            "profile": serialize_profile(user.profile)
-        }
-        
+            return {
+                "user_id": user.user_id,
+                "name": user.name,
+                "email": user.email,
+                "password": user.password,
+                "goals": [serialize_goal(goal) for goal in user.goals],
+                # "emergency_contact": user.emergency_contact,
+                "profile": serialize_profile(user.profile)
+            }
+        except ValueError as e:
+            print(f"\nError converting user to dict: {e}\n")
+            return None
         
     @staticmethod
     def retrieveUserIfValid(user_id: int):
@@ -106,7 +100,6 @@ class User:
                 [Goal(**goal) for goal in userDict["goals"]],
                 Profile(**userDict["profile"])
             )
-        
         except ValueError as e:
             print(f"\nError retrieving user: {e}\n")
             return None
