@@ -47,7 +47,6 @@ class User:
         def serialize_goal(goal):
             if not goal:
                 return None
-            #print("type of goal is: ", type(goal))
             d = vars(goal)
             
             if isinstance(d.get("start_date"), datetime.date):
@@ -98,23 +97,15 @@ class User:
             if userDict is None:
                 raise ValueError(f"User with ID {userid} not found.")
             
-            new_user = User(**{
-                "user_id": userDict["user_id"],
-                "name": userDict["name"],
-                "email": userDict["email"],
-                "password": userDict["password"],
-                "goals": None,
+            return User(
+                userDict["user_id"],
+                userDict["name"],
+                userDict["email"],
+                userDict["password"],
                 # "emergency_contact": None,  # EmergencyContact(**user.get("emergency_contact", {})),
-                "profile": None
-            })
-            
-            for goal in userDict["goals"]:
-                new_user.goals.append(Goal(**goal))
-                
-            
-            # user.emergency_contact = EmergencyContact(**user.get("emergency_contact", {}))
-            new_user.profile = Profile(**userDict["profile"])
-            return new_user
+                [Goal(**goal) for goal in userDict["goals"]],
+                Profile(**userDict["profile"])
+            )
         
         except ValueError as e:
             print(f"\nError retrieving user: {e}\n")
@@ -135,9 +126,9 @@ class User:
             raise ValueError("User ID, name, email, and password cannot be None.")
         
         user = User(user_id, name, email, password)
-        profile = Profile.create_profile()
-        user.profile = profile
-        user.goals = []
+        user.goals = None
+        user.profile = Profile.create_profile()
+        
         DataManager.save_to_file(user.to_dict(user))
         return user
 
