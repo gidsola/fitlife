@@ -48,7 +48,7 @@ class Goal:
     
     
     
-def goalMenu(user):
+def showGoalsMenu(user):
     while True:
         print("1. Set Goal")
         print("2. View Goal")

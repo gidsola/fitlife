@@ -1,5 +1,6 @@
 
-
+from src.fitnessTracker import FitnessTracker
+from src.smartwatch import Smartwatch
 
 class DeviceManager:
     def __init__(self, device_manager_id):
@@ -10,3 +11,26 @@ class DeviceManager:
 
     def sync_with_smartwatch(self, smartwatch):
         print(f"Syncing with smartwatch: {smartwatch.brand} {smartwatch.model}")
+        
+        
+        
+def showSyncMenu():
+    while True:
+            print("\n1. Sync Fitness Tracker\n2. Sync Smartwatch")
+            sub = input("Select: ")
+
+            if sub == "1":
+                brand = input("Tracker brand: ")
+                model = input("Tracker model: ")
+                tracker = FitnessTracker(tracker_id=1, brand=brand, model=model)
+                DeviceManager.sync_with_fitness_tracker(tracker)
+                print(f"Synced with fitness tracker: {tracker.brand} {tracker.model}")
+
+            elif sub == "2":
+                brand = input("Smartwatch brand: ")
+                model = input("Smartwatch model: ")
+                watch = Smartwatch(watch_id=1, brand=brand, model=model)
+                DeviceManager.sync_with_smartwatch(watch)
+                print(f"Synced with smartwatch: {watch.brand} {watch.model}")
+
+            input("Press Enter to continue...")

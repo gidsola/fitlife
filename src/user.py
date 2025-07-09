@@ -4,7 +4,7 @@ import datetime
 from src.dataManager import DataManager
 from src.userProfile import Profile
 from src.goal import Goal
-# from src.emergencyContact import EmergencyContact
+from src.emergencyContact import EmergencyContact
 
 class User:
     """Represents a user in the FitLife application.
@@ -14,7 +14,7 @@ class User:
         email (str): Email address of the user.
         password (str): Password for the user's account.
     """
-    def __init__(self, user_id: int, name: str, email: str, password: str, goals: list[Goal] = None, profile: Profile = None):
+    def __init__(self, user_id: int, name: str, email: str, password: str, e_contacts: list[EmergencyContact],goals: list[Goal] = None, profile: Profile = None):
         if not isinstance(user_id, int):
             raise ValueError("User ID must be an integer.")
         if not isinstance(name, str) or not isinstance(email, str) or not isinstance(password, str):
@@ -24,8 +24,8 @@ class User:
         self.name = name
         self.email = email
         self.password = password
+        self.emergency_contacts = e_contacts
         self.goals = goals
-        # self.emergency_contact = None
         self.profile = profile
         
     @staticmethod

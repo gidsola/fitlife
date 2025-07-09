@@ -79,7 +79,7 @@ class ITSecurityOfficer(User):
             return False
         
         
-def it_security_menu(security_officer: 'ITSecurityOfficer'):
+def showSecurityOfficerMenu(security_officer: 'ITSecurityOfficer'):
         while True:
             print("IT Security Officer Menu:\n")
             print("Welcome, IT Security Officer!")

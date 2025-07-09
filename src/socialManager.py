@@ -1,4 +1,10 @@
 
+from src.friend import showFriendsMenu
+from src.challenge import showChallengesMenu
+from src.leaderboard import showLeaderboardsMenu
+# from src.notification import Notification
+# from src.progressReport import ProgressReport
+
 
 class SocialManager:
     def __init__(self, social_manager_id):
@@ -14,4 +20,39 @@ class SocialManager:
         print(f"Competing on leaderboard with metric: {leaderboard.metric}")
 
 
+    
+def showSocialMenu(user):
+    while True:
+        print("\nSocial Features Menu")
+        print("1. Friends Management")
+        print("2. Challenges")
+        print("3. Leaderboards")
+        print("0. Back to Main Menu")
+
+        choice = input("Select an option: ")
+
+        if choice == "0":
+            break
+
+        elif choice == "1":
+            showFriendsMenu(user)
+
+        elif choice == "2":
+            showChallengesMenu(user)
+
+        elif choice == "3":
+            showLeaderboardsMenu(user)
+
+        else:
+            print("Invalid option. Please try again.")
+
+        input("Press Enter to continue...")
+
+
+        
+
+        
+
+        
+        
     

@@ -14,7 +14,7 @@ class Login:
     def manageSession(self, user: User):
         print(f"Managing session for user: {user.name}")
         
-    def loginMenu() -> User | ITSecurityOfficer | None:
+def loginMenu() -> User | ITSecurityOfficer | None:
         print("Welcome to FitLife!")
         print("1. User Login")
         print("2. IT Security Officer Login")
