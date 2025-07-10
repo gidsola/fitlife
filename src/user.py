@@ -122,11 +122,11 @@ class User:
         user.goals = None
         user.profile = Profile.create_profile()
         
-        DataManager.save_to_file(user.to_dict(user))
+        DataManager.save_to_file(user.to_dict(user)) # change to a saveuser implement
         return user
 
     
-    def update_user(self, name=None, email=None, password=None) -> None:
+    def updateUser(self, name=None, email=None, password=None) -> None:
         """Updates the user's information."""
         if name:
             self.name = name
@@ -137,13 +137,13 @@ class User:
         print(f"User {self.user_id} updated: Name={self.name}, Email={self.email}")
 
     
-    def save_user(self) -> None:
+    def saveUser(self) -> None:
         """Saves the user's current information."""
         DataManager.save_to_file(self.to_dict(self), f"data/user_{self.user_id}.json")
         print(f"User {self.user_id} saved: Name={self.name}, Email={self.email}")
         
     
-    def delete_user(self) -> None:
+    def deleteUser(self) -> None:
         """Deletes the user."""
         print(f"User {self.user_id} deleted: Name={self.name}, Email={self.email}")
         self = None

@@ -1,10 +1,9 @@
 
 from src.user import User
-# from src.dataManager import DataManager
 
 class ITSecurityOfficer(User):
     def __init__(self, officer_id: int, name: str, contact_info: str):
-        """Initializes an IT Security Officer with an officer ID, name, and contact information."""
+        """Initializes an IT Security Officer User object with an officer ID, name, and contact information."""
         
         if officer_id is None or name is None or contact_info is None:
             raise ValueError("Officer ID, name, and contact information cannot be None.")

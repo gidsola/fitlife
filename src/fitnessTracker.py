@@ -4,10 +4,8 @@ from src.activity import Activity
 from src.activityManager import ActivityManager
 
 class FitnessTracker:
-    def __init__(self, tracker_id, brand, model):
+    def __init__(self, tracker_id):
         self.tracker_id = tracker_id
-        self.brand = brand
-        self.model = model
 
     def track_activity(self, activity_type, duration, calories_burned, date, source="manual"):
         if source == "automatic":

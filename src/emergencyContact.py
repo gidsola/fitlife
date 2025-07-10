@@ -8,7 +8,7 @@ class EmergencyContact:
         self.phone_number = phone_number
         self.relationship = relationship
 
-    def notify_emergency_contact(self, message=None):
+    def notifyContact(self, message=None):
         if not message:
             message = f"Emergency alert for {self.name} ({self.relationship})."
         print(f"Notifying {self.name} at {self.phone_number}: {message}")
@@ -32,6 +32,7 @@ def showEmergencyContactMenu(user):
             relationship = input("Relationship: ")
             contact = EmergencyContact(contact_id=len(emergency_contacts)+1, name=name, phone_number=phone_number, relationship=relationship)
             emergency_contacts.append(contact)
+            # do the save
             print("Emergency contact added.")
 
         elif choice == "2":

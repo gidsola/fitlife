@@ -33,6 +33,7 @@ def loginMenu() -> User | ITSecurityOfficer | None:
             
             print(f"Attempting to login with user ID: {user_id}")
 
+            # make better implement 
             if user and str(user.user_id) == user_id:
                 login = Login(login_id=1, session_token="abc123xyz")
                 
