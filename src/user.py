@@ -5,6 +5,9 @@ from src.dataManager import DataManager
 from src.userProfile import Profile
 from src.goal import Goal
 from src.emergencyContact import EmergencyContact
+from src.activityManager import ActivityManager
+from src.socialManager import SocialManager
+from src.nutritionManager import NutritionManager
 
 class User:
     """Represents a user in the FitLife application.
@@ -27,8 +30,10 @@ class User:
         self.emergency_contacts = e_contacts
         self.goals = goals
         self.profile = profile
+        self.activity_manager = ActivityManager(user_id)
+        self.social_manager = SocialManager(user_id)
+        self.nutrition_manager = NutritionManager(user_id)
         
-    @staticmethod
     def to_dict(user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
         try:
@@ -108,7 +113,6 @@ class User:
             return None
     
     
-    @staticmethod
     def create_user(user_id, name, email, password) -> 'User':
         """Creates a new User object."""
         if not isinstance(user_id, int):
@@ -148,6 +152,22 @@ class User:
         print(f"User {self.user_id} deleted: Name={self.name}, Email={self.email}")
         self = None
         # do more proper implement
-    
+        
+        
+    def share_activity(self, activity):
+        self.social_manager.share_activity(activity)
 
-    
+
+    def share_progress_report(self, report):
+        self.social_manager.share_progress_report(report)
+        
+
+    def log_nutrition(self, nutrition):
+        self.nutrition_manager.log_nutrition(nutrition)
+
+
+    def share_nutrition_logs(self):
+        nutrition_logs = self.nutrition_manager.get_nutrition_logs()
+        for log in nutrition_logs:
+            self.social_manager.share_nutrition(log)
+

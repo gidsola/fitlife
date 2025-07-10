@@ -1,6 +1,4 @@
 
-
-
 import matplotlib.pyplot as plt
 
 class ProgressReport:
@@ -11,10 +9,10 @@ class ProgressReport:
     def generate_visual_representation(self, data):
         plt.plot(data)
         plt.title("Fitness Progress")
-        plt.xlabel("Time")
-        plt.ylabel("Progress")
+        plt.xlabel("Activity Index")
+        plt.ylabel("Calories Burned")
         plt.show()
-        
+
         
     # def view_progress_report(self, report):
     #     print(f"Progress Report for {self.name} on {report.report_date}: Report ID {report.report_id}")

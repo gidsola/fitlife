@@ -1,25 +1,39 @@
 
 import datetime
 from src.activity import Activity
+from src.activity import Activity
 from src.activityManager import ActivityManager
 
 class FitnessTracker:
     def __init__(self, tracker_id):
         self.tracker_id = tracker_id
+        self.activity_manager = ActivityManager(tracker_id)
 
     def track_activity(self, activity_type, duration, calories_burned, date, source="manual"):
-        if source == "automatic":
-            print(f"Automatically tracking activity: {activity_type}")
-        else:
-            print(f"Manually tracking activity: {activity_type}")
+        activity = Activity(
+            activity_id=len(self.activity_manager.activities) + 1,
+            activity_type=activity_type,
+            duration=duration,
+            calories_burned=calories_burned,
+            date=date
+        )
+        self.activity_manager.track_activity(activity, source)
+        print(f"Tracked {activity_type} activity: {duration} minutes, {calories_burned} calories burned")
 
-        activity = {
-            "activity_type": activity_type,
-            "duration": duration,
-            "calories_burned": calories_burned,
-            "date": date
-        }
-        return activity
+    def get_activity_logs(self):
+        return self.activity_manager.activities
+
+    def sync_with_device(self, device_data):
+        for activity_data in device_data:
+            self.track_activity(
+                activity_type=activity_data["activity_type"],
+                duration=activity_data["duration"],
+                calories_burned=activity_data["calories_burned"],
+                date=activity_data["date"],
+                source="device"
+            )
+        print("Synced with device successfully")
+
     
 def showTrackingMenu(activity_manager):
     activities = []
