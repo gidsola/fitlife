@@ -12,7 +12,7 @@ from src.goal import showGoalsMenu
 from src.nutrition import showNutritionMenu
 from src.notificationManager import showNotificationsMenu
 from src.userProfile import showProfileMenu
-from reportManager import showProgressReportMenu
+from src.reportManager import showProgressReportMenu
 from src.socialManager import showSocialMenu
 from src.deviceManager import showSyncMenu
 from src.fitnessTracker import showTrackingMenu

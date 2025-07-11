@@ -5,12 +5,13 @@
 #
 #  Need to refactor everything.. (after hand in.. :p)
 
-
-from src.fitnessTracker import FitnessTracker
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.fitnessTracker import FitnessTracker
 from src.smartwatch import Smartwatch
 
 class DeviceManager:
-    def __init__(self, fitnessTracker: FitnessTracker):
+    def __init__(self, fitnessTracker: 'FitnessTracker'):
         self.fitnessTracker = fitnessTracker
         
         #move/redo this stuff

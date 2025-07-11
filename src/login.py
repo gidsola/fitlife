@@ -4,7 +4,7 @@ from src.itSecurityOfficer import ITSecurityOfficer
 
 class Login:
     def __init__(self, login_id: int, session_token: str, user: 'User' = None):
-        if user is None and login_id is not 9999:
+        if user is None and login_id != 9999:
             print("User must be provided for non-default login_id.")
             return
         
@@ -17,7 +17,8 @@ class Login:
             print("Authentication can only be performed with the default login_id (9999).")
             return None
         
-        user = User.getUser(int(user_id))
+        sysUser = User(user_id=9999, name="sys_user", email="", password="security")
+        user = sysUser.getUser(int(user_id))
         if not user:
             print(f"User with ID {user_id} not found.")
             return None
