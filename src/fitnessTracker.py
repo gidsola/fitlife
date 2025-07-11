@@ -1,16 +1,16 @@
 
 import datetime
-from src.activity import Activity
-from src.activity import Activity
-from src.activityManager import ActivityManager
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.user import User
+    from src.activityManager import ActivityManager
 
 class FitnessTracker:
-    def __init__(self, tracker_id):
-        self.tracker_id = tracker_id
-        self.activity_manager = ActivityManager(tracker_id)
+    def __init__(self, user: 'User'):
+        self.activity_manager = user.activity_manager
 
     def track_activity(self, activity_type, duration, calories_burned, date, source="manual"):
-        activity = Activity(
+        activity = self.activity_manager.createActivity(
             activity_id=len(self.activity_manager.activities) + 1,
             activity_type=activity_type,
             duration=duration,
@@ -25,18 +25,21 @@ class FitnessTracker:
 
     def sync_with_device(self, device_data):
         for activity_data in device_data:
-            self.track_activity(
-                activity_type=activity_data["activity_type"],
-                duration=activity_data["duration"],
-                calories_burned=activity_data["calories_burned"],
-                date=activity_data["date"],
-                source="device"
-            )
+            try:
+                activity = self.activity_manager.createActivity(
+                    activity_id=activity_data['activity_id'],
+                    activity_type=activity_data['activity_type'],
+                    duration=activity_data['duration'],
+                    calories_burned=activity_data['calories_burned'],
+                    date=activity_data['date']
+                )
+                self.activity_manager.track_activity(activity, source="device")
+            except KeyError as e:
+                print(f"Missing data in device sync: {e}")
         print("Synced with device successfully")
 
     
-def showTrackingMenu(activity_manager):
-    activities = []
+def showTrackingMenu(activity_manager: 'ActivityManager'):
     while True:
             print("\nActivity Tracking Menu")    
             print("\n1. Track Activity\n2. View Activities")
@@ -54,14 +57,20 @@ def showTrackingMenu(activity_manager):
                     input("Press Enter to continue...")
                     continue
 
-                activity = Activity(activity_id=len(activities)+1, activity_type=activity_type, duration=duration, calories_burned=calories_burned, date=date)
-                activities.append(activity)
+                activity = activity_manager.createActivity(
+                    activity_id=len(activity_manager.activities)+1, 
+                    activity_type=activity_type, 
+                    duration=duration, 
+                    calories_burned=calories_burned, 
+                    date=date
+                )
+                # activities.append(activity)
                 activity_manager.track_activity(activity)
                 print("Activity tracked.")
 
             elif sub == "2":
-                if activities:
-                    for a in activities:
+                if activity_manager.activities:
+                    for a in activity_manager.activities:
                         print(f"{a.date}: {a.activity_type}, {a.duration} min, {a.calories_burned} cal")
                 else:
                     print("No activities tracked.")

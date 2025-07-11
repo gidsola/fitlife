@@ -26,7 +26,7 @@ def showSyncMenu():
             if sub == "1":
                 brand = input("Tracker brand: ")
                 model = input("Tracker model: ")
-                tracker = FitnessTracker(tracker_id=1, brand=brand, model=model)
+                tracker = FitnessTracker(tracker_id=1)
                 DeviceManager.sync_with_fitness_tracker(tracker)
                 print(f"Synced with fitness tracker: {tracker.brand} {tracker.model}")
 

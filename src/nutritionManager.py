@@ -1,11 +1,14 @@
 
-
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.user import User
 from src.nutrition import Nutrition
 
 class NutritionManager:
-    def __init__(self, nutrition_manager_id):
-        self.nutrition_manager_id = nutrition_manager_id
-        self.nutrition_logs = []
+    def __init__(self, user: 'User'):
+        self.user = user
+        self.nutrition_manager_id = 1
+        self.nutrition_logs: list[Nutrition] = []
 
     def log_nutrition(self, nutrition_id, food_item, quantity, calories, nutritional_values, source="manual"):
         nutrition = Nutrition(

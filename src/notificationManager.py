@@ -19,14 +19,14 @@ class NotificationManager:
         self.notifications.append(notification)
 
     
-    def sendNotification(self, notification: Notification):   # notification_type, message, date
+    def sendNotification(self, notification: Notification):
         """Create and send a notification for the user."""
         print(f"Notification sent: {notification.notification_type} - {notification.message} on {notification.date}")
         
 
     def getNotifications(self):
         """Retrieve all notifications for the user."""
-        return self.notification_manager.notifications
+        return self.notifications
     
 
     def sendAllNotifications(self):

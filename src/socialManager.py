@@ -16,9 +16,9 @@ from src.leaderboard import showLeaderboardsMenu
 class SocialManager:
     def __init__(self, user: 'User'):
         self.user = user
-        self.friends = []
-        self.challenges = []
-        self.leaderboards = []
+        self.friends: list[Friend] = []
+        self.challenges: list[Challenge] = []
+        self.leaderboards: list[Leaderboard] = []
         
 
     def connect_with_friend(self, friend: Friend):
@@ -50,13 +50,6 @@ class SocialManager:
         for item in nutrition_items:
             print(f"Food Item: {item.food_item}, Quantity: {item.quantity}, Calories: {item.calories}, Nutritional Values: {item.nutritional_values}")
         return nutrition_items
-        
-        
-    def share_activity_achievement(self, activity):
-        print(f"Sharing achievement: Completed {activity.activity_type} for {activity.duration} minutes!")
-
-    def share_progress_report(self, progress_report):
-        print(f"Sharing progress report from: {progress_report.report_date}")
     
     def share_activity_achievement(self, user: 'User', activity):
         message = f"Congratulations! You completed {activity.activity_type} for {activity.duration} minutes."

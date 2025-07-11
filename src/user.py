@@ -6,6 +6,7 @@ from src.emergencyContact import EmergencyContact
 from src.goal import Goal
 from src.userProfile import Profile
 
+from src.fitnessTracker import FitnessTracker
 from src.activityManager import ActivityManager
 from src.socialManager import SocialManager
 from src.nutritionManager import NutritionManager
@@ -38,8 +39,9 @@ class User:
         self.social_manager = SocialManager(self)
         self.nutrition_manager = NutritionManager(self)
         self.notification_manager = NotificationManager(self)
-        
-    def to_dict(user: 'User') -> dict:
+        self.fitness_tracker = FitnessTracker(self.activity_manager)
+    
+    def __to_dict(user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
         try:
             if not isinstance(user, User):
@@ -131,7 +133,7 @@ class User:
         user.goals = None
         user.profile = Profile.create_profile()
         
-        DataManager.save_to_file(user.to_dict(user)) # change to a saveuser implement
+        DataManager.save_to_file(user.__to_dict(user)) # change to a saveuser implement
         return user
 
     
@@ -148,7 +150,7 @@ class User:
     
     def saveUser(self) -> None:
         """Saves the user's current information."""
-        DataManager.save_to_file(self.to_dict(self), f"data/user_{self.user_id}.json")
+        DataManager.save_to_file(self.__to_dict(self), f"data/user_{self.user_id}.json")
         print(f"User {self.user_id} saved: Name={self.name}, Email={self.email}")
         
     

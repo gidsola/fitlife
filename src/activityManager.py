@@ -1,10 +1,25 @@
+
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.user import User
+
 from src.activity import Activity
 from src.progressReport import ProgressReport
 
 class ActivityManager:
-    def __init__(self, activity_manager_id):
-        self.activity_manager_id = activity_manager_id
-        self.activities = []
+    def __init__(self, user: 'User'):
+        self.user = user
+        self.activity_manager_id: int = 1
+        self.activities: list[Activity] = []
+        
+    def createActivity(self, activity_id: int, activity_type: str, duration: int, calories_burned: int, date: str):
+        if not isinstance(activity_id, int) or not isinstance(activity_type, str) or not isinstance(duration, int) or not isinstance(calories_burned, int) or not isinstance(date, str):
+            raise ValueError("Invalid input types for activity creation.")
+        
+        activity = Activity(activity_id, activity_type, duration, calories_burned, date)
+        # self.activities.append(activity)
+        print(f"Activity created: {activity.activity_type} on {activity.date}")
+        return activity
 
     def track_activity(self, activity: Activity, source="manual"):
         self.activities.append(activity)
