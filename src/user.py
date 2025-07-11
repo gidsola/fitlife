@@ -37,11 +37,12 @@ class User:
         self.profile = profile
         
         self.activity_manager = ActivityManager(self)
-        self.social_manager = SocialManager(self)
-        self.nutrition_manager = NutritionManager(self)
-        self.notification_manager = NotificationManager(self)
-        self.report_manager = ReportManager(self)
         self.fitness_tracker = FitnessTracker(self.activity_manager)
+        self.notification_manager = NotificationManager(self)
+        self.nutrition_manager = NutritionManager(self)
+        self.report_manager = ReportManager(self)
+        self.social_manager = SocialManager(self)
+        
     
     def __to_dict__(user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
@@ -173,17 +174,5 @@ class User:
         self = None
         # do more proper implement
         
-        
     
-
-
-    
-        
-
-    
-
-    def createNotification(self, title, message, date):
-        """Sends a notification to the user."""
-        self.notification_manager.createNotification(title, message, date)
-        print(f"Notification sent: {title} - {message} on {date}")
     
