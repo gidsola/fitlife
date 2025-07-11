@@ -127,7 +127,7 @@ class User:
     def getUser(self, userid: int) -> 'User | None':
         """Returns a User object."""
         try:
-            userDict = User.retrieveUserIfValid(userid)
+            userDict = self.retrieveUserIfValid(userid)
             if userDict is None:
                 raise ValueError(f"User with ID {userid} not found.")
             
