@@ -41,7 +41,7 @@ class User:
         self.notification_manager = NotificationManager(self)
         self.fitness_tracker = FitnessTracker(self.activity_manager)
     
-    def __to_dict(user: 'User') -> dict:
+    def __to_dict__(user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
         try:
             if not isinstance(user, User):
@@ -129,8 +129,10 @@ class User:
             return None
     
     
-    def create_user(user_id, name, email, password) -> 'User':
+    def create_user(self, user_id, name, email, password) -> 'User':
         """Creates a new User object."""
+        if not self.email == "security@fitlife.com":
+            raise ValueError("Only Security Officers may create new users.")
         if not isinstance(user_id, int):
             raise ValueError("User ID must be an integer.")
         if not isinstance(name, str) or not isinstance(email, str) or not isinstance(password, str):
@@ -142,7 +144,7 @@ class User:
         user.goals = None
         user.profile = Profile.create_profile()
         
-        DataManager.save_to_file(user.__to_dict(user)) # change to a saveuser implement
+        DataManager.save_to_file(user.__to_dict__(user)) # change to a saveuser implement
         return user
 
     
@@ -159,7 +161,7 @@ class User:
     
     def saveUser(self) -> None:
         """Saves the user's current information."""
-        DataManager.save_to_file(self.__to_dict(self), f"data/user_{self.user_id}.json")
+        DataManager.save_to_file(self.__to_dict__(self), f"data/user_{self.user_id}.json")
         print(f"User {self.user_id} saved: Name={self.name}, Email={self.email}")
         
     

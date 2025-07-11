@@ -65,7 +65,7 @@ def loginMenu() -> 'User | ITSecurityOfficer | None':
     elif choice == "2":
         officer_id = input("Officer ID: ")
         name = input("Name: ")
-        security_officer = ITSecurityOfficer(officer_id=int(officer_id), name=name, contact_info="security@example.com")
+        security_officer = ITSecurityOfficer(officer_id=int(officer_id), name=name, contact_info="security@fitlife.com")
         print("IT Security Officer login successful!")
         return security_officer
 
