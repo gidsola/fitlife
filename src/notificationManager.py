@@ -2,14 +2,41 @@
 from src.notification import Notification
 
 class NotificationManager:
-    def __init__(self, notification_manager_id):
-        self.notification_manager_id = notification_manager_id
+    def __init__(self, user):
+        self.user = user
+        self.notification_manager_id = 1
+        self.notifications = []
 
-    def send_notification(self, notification):
-        print(f"Sending notification: {notification.message}")
+    def createNotification(self, title, message, date):
+        """Add a notification to the manager's list of notifications."""
+        
+        notification = Notification(
+            notification_id=len(self.notifications) + 1,
+            notification_type=title,
+            message=message,
+            date=date
+        )
+        self.notifications.append(notification)
+
+    
+    def sendNotification(self, notification: Notification):   # notification_type, message, date
+        """Create and send a notification for the user."""
+        print(f"Notification sent: {notification.notification_type} - {notification.message} on {notification.date}")
+        
+
+    def getNotifications(self):
+        """Retrieve all notifications for the user."""
+        return self.notification_manager.notifications
+    
+
+    def sendAllNotifications(self):
+        """Send all notifications."""
+        for notification in self.notifications:
+            self.send_notification(notification)
 
     def customize_notification_preferences(self):
-        print("Customizing notification preferences")
+        """Customize how notifications are sent or handled."""
+        print("Customizing notification preferences.")
 
 
 def showNotificationsMenu():

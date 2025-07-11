@@ -9,6 +9,12 @@ class ActivityManager:
     def track_activity(self, activity: Activity, source="manual"):
         self.activities.append(activity)
         print(f"Tracking activity: {activity.activity_type} from {source}")
+        
+    def getActivity(self, activity_id):
+        for activity in self.activities:
+            if activity.activity_id == activity_id:
+                return activity
+        return None
 
     def calculate_calories_burned(self, activity: Activity):
         calories_burned = activity.duration * 10
