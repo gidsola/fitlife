@@ -55,7 +55,7 @@ class User:
         self.profile = profile
         
         self.activity_manager = ActivityManager(self)
-        self.fitness_tracker = FitnessTracker(self.activity_manager)
+        self.fitness_tracker = FitnessTracker(self)
         self.notification_manager = NotificationManager(self)
         self.nutrition_manager = NutritionManager(self)
         self.report_manager = ReportManager(self)
@@ -70,7 +70,7 @@ class User:
             if user is None:
                 raise ValueError("User cannot be None.")
         
-            def serialize_goal(goal):
+            def serialize_goal(goal: 'Goal'):
                 if not goal:
                     return None
                 d = vars(goal)
@@ -80,7 +80,7 @@ class User:
                     d["end_date"] = d["end_date"].isoformat()
                 return d
             
-            def serialize_emergency_contact(contact):
+            def serialize_emergency_contact(contact: 'EmergencyContact'):
                 if not contact:
                     return None
                 return {
@@ -89,7 +89,7 @@ class User:
                     "phone_number": contact.phone_number
                 }
         
-            def serialize_profile(profile):
+            def serialize_profile(profile: 'Profile'):
                 if not profile:
                     return None
                 return {
