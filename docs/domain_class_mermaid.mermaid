@@ -1,0 +1,197 @@
+---
+config:
+  theme: base
+  layout: dagre
+  look: neo
+---
+classDiagram
+direction TB
+    class Activity {
+	    -activity_id: int
+	    -activity_type: str
+	    -duration: int
+	    -calories_burned: int
+	    -date: str
+    }
+    class ActivityManager {
+	    -user: User
+	    -activities: list[Activity]
+		+createActivity(activity_id: int, activity_type: str, duration: int, calories_burned: int, date: str): Activity
+	    +track_activity(activity: Activity, source: str) None
+	    +getActivity(activity_id: int) Activity
+	    +calculate_calories_burned(activity: Activity) int
+	    +generate_progress_report(report_id: int, report_date: str) ProgressReport
+		+shareActivity(activity: Activity) None
+    }
+    class Challenge {
+	    -challenge_id: int
+	    -challenge_name: str
+	    -start_date: str
+	    -end_date: str
+    }
+    class DataManager {
+		<<Abstract>>
+	    +save_to_file(user: dict, filename: str) None
+	    +load_from_file(filename: str) dict
+    }
+    class DeviceManager {
+	    -fitness_tracker: FitnessTracker
+	    +sync_with_fitness_tracker(device_data) None
+	    +sync_with_smartwatch(device_data) None
+    }
+    class EmergencyContact {
+	    -contact_id: int
+	    -name: str
+	    -phone_number: str
+	    -relationship: str
+	    +notifyContact(message: str) None
+    }
+    class FitnessTracker {
+	    -user: User
+		-device_manager: DeviceManager
+	    +sync_with_device() None
+    }
+    class Friend {
+	    -friend_id: int
+	    -friend_name: str
+    }
+    class Goal {
+	    -goal_id: int
+	    -goal_name: str
+	    -goal_type: str
+	    -goal_value: int
+	    -frequency: str
+	    -start_date: datetime.date
+	    -end_date: datetime.date
+	    +validate_goal() bool
+	    +set_goal(user: User, goal: Goal) None
+    }
+    class ITSecurityOfficer {
+	    -officer_id: int
+	    -name: str
+	    -contact_info: str
+	    +enforceSecurityPolicies(userid: int) bool
+	    +monitorSystemSecurity() None
+	    +manageDataEncryption(userid: int) bool
+	    +auditSecurityCompliance(userid: int) bool
+    }
+    class Leaderboard {
+	    -leaderboard_id: int
+	    -metric: str
+	    +update_rankings() None
+    }
+    class Login {
+	    -login_id: int
+	    -session_token: str
+	    -user: User
+	    +authenticate(user_id: int, password: str) Login | None
+	    +manageSession(user: User) None
+    }
+    class Notification {
+	    -notification_id: int
+	    -notification_type: str
+	    -message: str
+	    -date: str
+    }
+    class NotificationManager {
+	    -user: User
+	    -notifications: list[Notification]
+	    +createNotification(title: str, message: str, date: str)
+	    +sendNotification(notification: Notification) None
+	    +getNotifications() : list[Notification]
+	    +sendAllNotifications() : None
+	    +customize_notification_preferences() None
+    }
+    class Nutrition {
+	    -nutrition_id: int
+	    -food_item: str
+	    -quantity: int
+	    -calories: float
+	    -nutritional_values: dict
+    }
+    class NutritionManager {
+	    -user: User
+	    -nutrition_logs: list[Nutrition]
+	    +logNutrition(nutrition: Nutrition, source: str) None
+	    +getNutritionInfo(nutrition: Nutrition) dict
+	    +getNutritionItems() list[Nutrition]
+	    +shareNutritionLogs() list
+    }
+    class Report {
+	    -report_id: int
+	    -report_date: str
+		-content: str
+    }
+	class ReportManager {
+		-user: User
+		-generate_visual_representation(data: list) None
+		+generate_progress_report(report_id: int, report_date: str, content=None): Report
+	}
+    class Profile {
+	    -age: int
+	    -height: float
+	    -weight: float
+	    +update_profile(age: int, height: float, weight: float) None
+	    +create_profile() Profile
+    }
+    class Smartwatch {
+	    -watch_id: int
+	    -brand: str
+	    -model: str
+    }
+    class SocialManager {
+	    -user: User
+	    -friends: list[Friend]
+	    -challenges: list[Challenge]
+	    -leaderboards: list[Leaderboard]
+	    +connectWithFriend(friend: Friend) None
+	    +join_challenge(challenge: Challenge) None
+	    +compete_on_leaderboard(leaderboard: Leaderboard) None
+	    +shareActivity(user: User, activity_id: int) None
+	    +share_progress_report(progress_report: ProgressReport) None
+		+share_progress_report(report: ProgressReport) None
+    }
+    class User {
+	    -user_id: int
+	    -name: str
+	    -email: str
+	    -password: str
+	    -emergency_contacts: list[EmergencyContact]
+	    -goals: list[Goal]
+	    -profile: Profile
+		-activity_manager: ActivityManager
+	    -social_manager: SocialManager
+	    -nutrition_manager: NutritionManager
+	    -notification_manager = NotificationManager
+	    -fitness_tracker = FitnessTracker
+	    -__to_dict(user: User) dict
+	    $getUser(userid: int) User
+	    +create_user(user_id: int, name: str, email: str, password: str) User
+	    +updateUser(name: str, email: str, password: str) None
+	    +saveUser() None
+	    +deleteUser() None
+    }
+    Login --> User : Authenticates
+    Login --> ITSecurityOfficer : Authenticates
+    User "1" *-- "0..*" Goal
+    User "1" *-- "1" Profile
+    User "1" *-- "0..*" EmergencyContact
+	User "1" *-- "1" ActivityManager
+    User "1" *-- "1" FitnessTracker
+    User "1" *-- "1" NotificationManager
+	User "1" *-- "1" NutritionManager
+	User "1" *-- "1" SocialManager
+	User "1" *-- "1" ReportManager
+    User <--> DataManager
+    ITSecurityOfficer --|> User
+    ActivityManager "1" *-- "0..*" Activity
+	ReportManager "1" *-- "0..*" Report
+	FitnessTracker "1" *-- "1" DeviceManager
+	DeviceManager "1" -- "1" Smartwatch
+    NutritionManager "1" *-- "0..*" Nutrition
+    NotificationManager "1" *-- "0..*" Notification
+    SocialManager "1" -- "0..*" Friend
+    SocialManager "1" -- "0..*" Challenge
+    SocialManager "1" -- "0..*" Leaderboard
+    
+    
