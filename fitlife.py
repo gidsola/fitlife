@@ -18,7 +18,7 @@ from src.deviceManager import showSyncMenu
 from src.fitnessTracker import showTrackingMenu
 
 
-def showUserDashboard(user:'User | ITSecurityOfficer'):
+def showUserDashboard(user: 'User | ITSecurityOfficer'):
     while True:
         print("Welcome to FitLife!")
         print("\nDashboard:")
@@ -63,10 +63,10 @@ def showUserDashboard(user:'User | ITSecurityOfficer'):
 def start_app():
     while True:
         user = loginMenu()
-        if isinstance(user, 'ITSecurityOfficer'):
+        if type(user).__name__ == "ITSecurityOfficer":
             showSecurityOfficerMenu(user)
             break
-        elif isinstance(user, 'User'):
+        elif type(user).__name__ == "User":
             showUserDashboard(user)
             break
         else:
