@@ -1,4 +1,8 @@
 
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.user import User
+    from src.itSecurityOfficer import ITSecurityOfficer
 
 from src.login import loginMenu
 from src.itSecurityOfficer import showSecurityOfficerMenu
@@ -14,7 +18,7 @@ from src.deviceManager import showSyncMenu
 from src.fitnessTracker import showTrackingMenu
 
 
-def showUserDashboard(user):
+def showUserDashboard(user:'User | ITSecurityOfficer'):
     while True:
         print("Welcome to FitLife!")
         print("\nDashboard:")
@@ -59,10 +63,10 @@ def showUserDashboard(user):
 def start_app():
     while True:
         user = loginMenu()
-        if type(user).__name__ == "ITSecurityOfficer":
+        if isinstance(user, 'ITSecurityOfficer'):
             showSecurityOfficerMenu(user)
             break
-        elif type(user).__name__ == "User":
+        elif isinstance(user, 'User'):
             showUserDashboard(user)
             break
         else:
