@@ -111,7 +111,7 @@ class User:
             print(f"\nError converting user to dict: {e}\n")
             return None
         
-    def retrieveUserIfValid(user_id: int):
+    def retrieveUserIfValid(self, user_id: int):
         """Checks if the user ID is valid, returning a user dictionary if found."""
         if not isinstance(user_id, int):
             raise ValueError("User ID must be an integer.")
