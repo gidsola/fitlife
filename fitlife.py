@@ -63,6 +63,9 @@ def showUserDashboard(user: 'User | ITSecurityOfficer'):
 def start_app():
     while True:
         user = loginMenu()
+        if user is None:
+            print("Login failed. Please try again.")
+            continue
         if type(user).__name__ == "ITSecurityOfficer":
             showSecurityOfficerMenu(user)
             break
@@ -70,7 +73,8 @@ def start_app():
             showUserDashboard(user)
             break
         else:
-            print("Invalid login. Please try again.")
+            print("Unknown user type. Please try again.")
+            continue
 
 if __name__ == "__main__":
     start_app()
