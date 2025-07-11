@@ -4,39 +4,40 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.user import User
     from src.activityManager import ActivityManager
+from src.deviceManager import DeviceManager
 
 class FitnessTracker:
     def __init__(self, user: 'User'):
-        self.activity_manager = user.activity_manager
+        self.user = user
+        self.device_manager = DeviceManager(self)
 
-    def track_activity(self, activity_type, duration, calories_burned, date, source="manual"):
-        activity = self.activity_manager.createActivity(
-            activity_id=len(self.activity_manager.activities) + 1,
-            activity_type=activity_type,
-            duration=duration,
-            calories_burned=calories_burned,
-            date=date
-        )
-        self.activity_manager.track_activity(activity, source)
-        print(f"Tracked {activity_type} activity: {duration} minutes, {calories_burned} calories burned")
+#########################
+#  Need to re-factor all this also..
+    # def trackActivity(self, activity_type, duration, calories_burned, date, source="manual"):
+    #     activity = self.user.activity_manager.createActivity(
+    #         activity_id=len(self.user.activity_manager.activities) + 1,
+    #         activity_type=activity_type,
+    #         duration=duration,
+    #         calories_burned=calories_burned,
+    #         date=date
+    #     )
+    #     self.user.activity_manager.trackActivity(activity, source)
+    #     print(f"Tracked {activity_type} activity: {duration} minutes, {calories_burned} calories burned")
 
-    def get_activity_logs(self):
-        return self.activity_manager.activities
-
-    def sync_with_device(self, device_data):
-        for activity_data in device_data:
-            try:
-                activity = self.activity_manager.createActivity(
-                    activity_id=activity_data['activity_id'],
-                    activity_type=activity_data['activity_type'],
-                    duration=activity_data['duration'],
-                    calories_burned=activity_data['calories_burned'],
-                    date=activity_data['date']
-                )
-                self.activity_manager.track_activity(activity, source="device")
-            except KeyError as e:
-                print(f"Missing data in device sync: {e}")
-        print("Synced with device successfully")
+    # def sync_with_device(self, device_data):
+    #     for activity_data in device_data:
+    #         try:
+    #             activity = self.user.activity_manager.createActivity(
+    #                 activity_id=activity_data['activity_id'],
+    #                 activity_type=activity_data['activity_type'],
+    #                 duration=activity_data['duration'],
+    #                 calories_burned=activity_data['calories_burned'],
+    #                 date=activity_data['date']
+    #             )
+    #             self.user.activity_manager.trackActivity(activity, source="device")
+    #         except KeyError as e:
+    #             print(f"Missing data in device sync: {e}")
+    #     print("Synced with device successfully")
 
     
 def showTrackingMenu(activity_manager: 'ActivityManager'):
@@ -65,7 +66,7 @@ def showTrackingMenu(activity_manager: 'ActivityManager'):
                     date=date
                 )
                 # activities.append(activity)
-                activity_manager.track_activity(activity)
+                activity_manager.trackActivity(activity)
                 print("Activity tracked.")
 
             elif sub == "2":

@@ -12,6 +12,10 @@ class ProgressReport:
         plt.xlabel("Activity Index")
         plt.ylabel("Calories Burned")
         plt.show()
+        
+        
+    def share_progress_report(self, report):
+        self.share_progress_report(report)
 
         
     # def view_progress_report(self, report):
@@ -21,6 +25,6 @@ def showProgressReportMenu(user):
         report_id = 1
         report_date = input("Report date (YYYY-MM-DD): ")
         report = ProgressReport(report_id=report_id, report_date=report_date)
-        user.view_progress_report(report)
+        # user.view_progress_report(report)
         report.generate_visual_representation([1, 2, 3, 4, 5])
         input("Press Enter to continue...")

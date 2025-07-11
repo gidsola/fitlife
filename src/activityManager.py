@@ -9,7 +9,6 @@ from src.progressReport import ProgressReport
 class ActivityManager:
     def __init__(self, user: 'User'):
         self.user = user
-        self.activity_manager_id: int = 1
         self.activities: list[Activity] = []
         
     def createActivity(self, activity_id: int, activity_type: str, duration: int, calories_burned: int, date: str):
@@ -21,7 +20,7 @@ class ActivityManager:
         print(f"Activity created: {activity.activity_type} on {activity.date}")
         return activity
 
-    def track_activity(self, activity: Activity, source="manual"):
+    def trackActivity(self, activity: Activity, source="manual"):
         self.activities.append(activity)
         print(f"Tracking activity: {activity.activity_type} from {source}")
         
@@ -41,3 +40,8 @@ class ActivityManager:
         data = [activity.calories_burned for activity in self.activities]
         report.generate_visual_representation(data)
         return report
+    
+    def shareActivity(self, activity):        
+        print(f"Sharing activity: {activity.activity_type} - {activity.calories_burned} calories burned")
+        return True
+        

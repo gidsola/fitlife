@@ -21,7 +21,7 @@ class SocialManager:
         self.leaderboards: list[Leaderboard] = []
         
 
-    def connect_with_friend(self, friend: Friend):
+    def connectWithFriend(self, friend: Friend):
         print(f"Connecting with friend: {friend.friend_name}")
 
     def join_challenge(self, challenge: Challenge):
@@ -40,7 +40,7 @@ class SocialManager:
     def share_progress_report(self, progress_report: ProgressReport):
         print(f"Sharing progress report from: {progress_report.report_date}")
         
-    def getNutritionInfo(self, user: 'User'):
+    def shareNutritionInfo(self, user: 'User'):
         nutrition_items = user.nutrition_manager.getNutritionItems()
         if len(nutrition_items) == 0:
             print("No nutrition log to share.")

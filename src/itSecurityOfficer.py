@@ -20,7 +20,7 @@ class ITSecurityOfficer(User):
 
 
     
-    def enforce_security_policies(self, userid: int):
+    def enforceSecurityPolicies(self, userid: int):
         try:
             if not isinstance(userid, int):
                 raise ValueError("User ID must be an integer.")
@@ -38,10 +38,10 @@ class ITSecurityOfficer(User):
             print(f"\nError enforcing security policies: {e}\n")
             return False
 
-    def monitor_system_security(self):
+    def monitorSystemSecurity(self):
         print("Monitoring system security")
 
-    def manage_data_encryption(self, userid: int):
+    def manageDataEncryption(self, userid: int):
         try:
             if not isinstance(userid, int):
                 raise ValueError("User ID must be an integer.")
@@ -59,7 +59,7 @@ class ITSecurityOfficer(User):
             print(f"\nError managing data encryption: {e}\n")
             return False
 
-    def audit_security_compliance(self, userid: int):
+    def auditSecurityCompliance(self, userid: int):
         try:
             if not isinstance(userid, int):
                 raise ValueError("User ID must be an integer.")
@@ -98,21 +98,21 @@ def showSecurityOfficerMenu(security_officer: 'ITSecurityOfficer'):
 
             if choice == "1":
                 user_id = input("Enter User ID to enforce security policies: ")
-                if security_officer.enforce_security_policies(int(user_id)):
+                if security_officer.enforceSecurityPolicies(int(user_id)):
                     print(f"Security policies enforced successfully.")
                 else:
                     print("\nError while trying to enforce security policies.")
 
             elif choice == "2":
-                security_officer.monitor_system_security()
+                security_officer.monitorSystemSecurity()
 
             elif choice == "3":
                 user_id = input("Enter User ID to manage data encryption: ")
-                security_officer.manage_data_encryption(int(user_id))
+                security_officer.manageDataEncryption(int(user_id))
 
             elif choice == "4":
                 user_id = input("Enter User ID to audit security compliance: ")
-                security_officer.audit_security_compliance(int(user_id))
+                security_officer.auditSecurityCompliance(int(user_id))
 
             elif choice == "N" or choice.lower() == "n":
                 print("Creating a new user...")

@@ -7,7 +7,6 @@ from src.nutrition import Nutrition
 class NutritionManager:
     def __init__(self, user: 'User'):
         self.user = user
-        self.nutrition_manager_id = 1
         self.nutrition_logs: list[Nutrition] = []
 
     def log_nutrition(self, nutrition_id, food_item, quantity, calories, nutritional_values, source="manual"):
@@ -21,7 +20,7 @@ class NutritionManager:
         self.nutrition_logs.append(nutrition)
         print(f"Logging nutrition: {nutrition.food_item} from {source}")
 
-    def calculate_nutritional_values(self, food_item, quantity):
+    def getNutritionInfo(self, food_item, quantity):
         """Calculates nutritional values based on food item and quantity."""
         responseJSON = {
             "protein": quantity * 0.1,
@@ -34,3 +33,12 @@ class NutritionManager:
         """Retrieves all nutrition logs."""
         return self.nutrition_logs
 
+
+    def shareNutritionLogs(self):
+        nutrition_logs = self.getNutritionItems()
+        generated = []
+        for item in nutrition_logs:
+            self.getNutritionInfo(item)
+            generated.append(item)
+            print(f"Sharing nutrition log: {item.food_item} - {item.calories} calories")
+        return generated

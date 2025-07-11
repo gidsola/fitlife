@@ -172,22 +172,13 @@ class User:
         # do more proper implement
         
         
-    def share_activity(self, activity):
-        self.social_manager.shareActivity(activity)
+    
 
 
-    def share_progress_report(self, report):
-        self.social_manager.share_progress_report(report)
+    
         
 
-    def log_nutrition(self, nutrition):
-        self.nutrition_manager.log_nutrition(nutrition)
-
-
-    def share_nutrition_logs(self):
-        nutrition_logs = self.nutrition_manager.getNutritionItems()
-        for log in nutrition_logs:
-            self.social_manager.getNutritionInfo(log)
+    
 
     def createNotification(self, title, message, date):
         """Sends a notification to the user."""

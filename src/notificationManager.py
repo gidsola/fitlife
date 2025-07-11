@@ -4,7 +4,6 @@ from src.notification import Notification
 class NotificationManager:
     def __init__(self, user):
         self.user = user
-        self.notification_manager_id = 1
         self.notifications = []
 
     def createNotification(self, title, message, date):
