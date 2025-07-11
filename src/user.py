@@ -117,7 +117,7 @@ class User:
                 userDict["name"],
                 userDict["email"],
                 userDict["password"],
-                [EmergencyContact(**contact) for contact in userDict.get("emergency_contacts", [])],
+                [EmergencyContact(**contact) for contact in userDict["emergency_contacts"]],
                 [Goal(**goal) for goal in userDict["goals"]],
                 Profile(**userDict["profile"])
             )
