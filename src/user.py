@@ -58,6 +58,15 @@ class User:
                 if isinstance(d.get("end_date"), datetime.date):
                     d["end_date"] = d["end_date"].isoformat()
                 return d
+            
+            def serialize_emergency_contact(contact):
+                if not contact:
+                    return None
+                return {
+                    "name": contact.name,
+                    "relationship": contact.relationship,
+                    "phone_number": contact.phone_number
+                }
         
             def serialize_profile(profile):
                 if not profile:
@@ -74,7 +83,7 @@ class User:
                 "email": user.email,
                 "password": user.password,
                 "goals": [serialize_goal(goal) for goal in user.goals],
-                # "emergency_contact": user.emergency_contact,
+                "emergency_contact": [serialize_emergency_contact(contact) for contact in user.emergency_contacts],
                 "profile": serialize_profile(user.profile)
             }
         except ValueError as e:
@@ -108,7 +117,7 @@ class User:
                 userDict["name"],
                 userDict["email"],
                 userDict["password"],
-                # "emergency_contact": None,  # EmergencyContact(**user.get("emergency_contact", {})),
+                [EmergencyContact(**contact) for contact in userDict.get("emergency_contacts", [])],
                 [Goal(**goal) for goal in userDict["goals"]],
                 Profile(**userDict["profile"])
             )
