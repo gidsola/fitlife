@@ -1,10 +1,22 @@
 
 import matplotlib.pyplot as plt
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from src.user import User
+    
+from src.report import Report
 
-class ProgressReport:
-    def __init__(self, report_id, report_date):
-        self.report_id = report_id
-        self.report_date = report_date
+class ReportManager:
+    def __init__(self, user: 'User'):
+        self.user = user
+        # self.report_id = report_id
+        # self.report_date = report_date
+        
+    def generate_progress_report(self, report_id, report_date):
+        report = Report(report_id, report_date)
+        data = [activity.calories_burned for activity in self.activities]
+        report.generate_visual_representation(data)
+        return report
 
     def generate_visual_representation(self, data):
         plt.plot(data)
@@ -24,7 +36,7 @@ class ProgressReport:
 def showProgressReportMenu(user):
         report_id = 1
         report_date = input("Report date (YYYY-MM-DD): ")
-        report = ProgressReport(report_id=report_id, report_date=report_date)
+        report = Report(report_id=report_id, report_date=report_date)
         # user.view_progress_report(report)
         report.generate_visual_representation([1, 2, 3, 4, 5])
         input("Press Enter to continue...")

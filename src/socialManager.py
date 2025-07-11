@@ -7,7 +7,7 @@ if TYPE_CHECKING:
 from src.friend import Friend
 from src.challenge import Challenge
 from src.leaderboard import Leaderboard
-from src.progressReport import ProgressReport
+# from src.progressReport import ProgressReport
 
 from src.friend import showFriendsMenu
 from src.challenge import showChallengesMenu
@@ -37,8 +37,8 @@ class SocialManager:
             return
         print(f"Sharing activity: {activity.activity_type} for {activity.duration} minutes.")
 
-    def share_progress_report(self, progress_report: ProgressReport):
-        print(f"Sharing progress report from: {progress_report.report_date}")
+    def share_progress_report(self, report_id: int):
+        print(f"Sharing progress report with ID: {report_id}")
         
     def shareNutritionInfo(self, user: 'User'):
         nutrition_items = user.nutrition_manager.getNutritionItems()

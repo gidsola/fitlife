@@ -4,7 +4,7 @@ if TYPE_CHECKING:
     from src.user import User
 
 from src.activity import Activity
-from src.progressReport import ProgressReport
+# from src.progressReport import ProgressReport
 
 class ActivityManager:
     def __init__(self, user: 'User'):
@@ -35,11 +35,7 @@ class ActivityManager:
         print(f"Calculating calories burned for {activity.activity_type}: {calories_burned}")
         return calories_burned
 
-    def generate_progress_report(self, report_id, report_date):
-        report = ProgressReport(report_id, report_date)
-        data = [activity.calories_burned for activity in self.activities]
-        report.generate_visual_representation(data)
-        return report
+    
     
     def shareActivity(self, activity):        
         print(f"Sharing activity: {activity.activity_type} - {activity.calories_burned} calories burned")

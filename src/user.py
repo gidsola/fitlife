@@ -11,6 +11,7 @@ from src.activityManager import ActivityManager
 from src.socialManager import SocialManager
 from src.nutritionManager import NutritionManager
 from src.notificationManager import NotificationManager
+from reportManager import ReportManager
 
 class User:
     """Represents a user in the FitLife application.
@@ -39,6 +40,7 @@ class User:
         self.social_manager = SocialManager(self)
         self.nutrition_manager = NutritionManager(self)
         self.notification_manager = NotificationManager(self)
+        self.report_manager = ReportManager(self)
         self.fitness_tracker = FitnessTracker(self.activity_manager)
     
     def __to_dict__(user: 'User') -> dict:
