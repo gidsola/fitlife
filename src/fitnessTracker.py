@@ -1,9 +1,9 @@
 
-import datetime
+# import datetime
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.user import User
-    from src.activityManager import ActivityManager
+    # from src.activityManager import ActivityManager
 from src.deviceManager import DeviceManager
 
 class FitnessTracker:

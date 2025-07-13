@@ -8,7 +8,7 @@
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.fitnessTracker import FitnessTracker
-from src.smartwatch import Smartwatch
+# from src.smartwatch import Smartwatch
 
 class DeviceManager:
     def __init__(self, fitnessTracker: 'FitnessTracker'):

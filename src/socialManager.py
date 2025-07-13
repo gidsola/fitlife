@@ -1,5 +1,4 @@
 
-
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from src.user import User
@@ -7,11 +6,6 @@ if TYPE_CHECKING:
 from src.friend import Friend
 from src.challenge import Challenge
 from src.leaderboard import Leaderboard
-# from src.progressReport import ProgressReport
-
-from src.friend import showFriendsMenu
-from src.challenge import showChallengesMenu
-from src.leaderboard import showLeaderboardsMenu
 
 class SocialManager:
     def __init__(self, user: 'User'):
