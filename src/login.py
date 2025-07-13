@@ -5,7 +5,7 @@ from src.itSecurityOfficer import ITSecurityOfficer
 class Login:
     def __init__(self, login_id: int, session_token: str, user: 'User' = None):
         if user is None and login_id != 9999:
-            print("User must be provided for non-default login_id.")
+            print("User must be provided for non-system login_id.")
             return
         
         self.login_id = login_id
@@ -14,7 +14,7 @@ class Login:
 
     def authenticate(self, user_id: int, password: str) -> 'Login | None':
         if self.login_id != 9999:
-            print("Authentication can only be performed with the default login_id (9999).")
+            print("Authentication can only be performed with the system login_id (9999).")
             return None
         
         sysUser = User(user_id=9999, name="sys_user", email="", password="security")
@@ -51,7 +51,6 @@ def loginMenu() -> 'User | ITSecurityOfficer | None':
         
         if new_login is not None:
             user = new_login.user
-            
             if user is None:
                 print("User not found or authentication failed.")
                 return None

@@ -12,7 +12,7 @@ class ITSecurityOfficer(User):
         if not isinstance(name, str) or not isinstance(contact_info, str):
             raise ValueError("Name and contact information must be strings.")
 
-        super().__init__(user_id=officer_id, name=name, email=contact_info, password="", profile=None, goals=None)
+        super().__init__(user_id=officer_id, name=name, email=contact_info, password="")
 
         self.officer_id = officer_id
         self.name = name
@@ -122,9 +122,8 @@ def showSecurityOfficerMenu(security_officer: 'ITSecurityOfficer'):
                 password = input("Enter Password: ")
 
                 try:
-                    new_user = User.create_user(int(user_id), name, email, password)
+                    new_user = security_officer.create_user(int(user_id), name, email, password)
                     print(f"New user created successfully: {new_user.name}")
-                    # DataManager.save_to_file(new_user)  # Uncomment to save the new user
                 except ValueError as e:
                     print(f"Error creating user: {e}")
 

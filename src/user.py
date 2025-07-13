@@ -27,32 +27,12 @@ class User:
         if not isinstance(name, str) or not isinstance(email, str) or not isinstance(password, str):
             raise ValueError("Name, email, and password must be strings.")
         
-        # Allow creation of a basic system user for IT Security Officer
-        if user_id == 9999 and name == "sys_user" and password == "security":
-            self.user_id = user_id
-            self.name = name
-            self.email = email
-            self.password = password
-            self.emergency_contacts = []
-            self.goals = []
-            self.profile = None
-            self.activity_manager = None
-            self.fitness_tracker = None
-            self.notification_manager = None
-            self.nutrition_manager = None
-            self.report_manager = None
-            self.social_manager = None
-            return
-        
-        
         self.user_id = user_id
         self.name = name
         self.email = email
         self.password = password
-        
-        self.emergency_contacts = e_contacts
-        self.goals = goals
-        self.profile = profile
+        if user_id == 9999 and name == "sys_user" and password == "security":
+            return
         
         self.activity_manager = ActivityManager(self)
         self.fitness_tracker = FitnessTracker(self)
@@ -61,8 +41,13 @@ class User:
         self.report_manager = ReportManager(self)
         self.social_manager = SocialManager(self)
         
+        # isolate from non ITSecurityOfficer users?
+        self.emergency_contacts = e_contacts if e_contacts is not None else []
+        self.goals = goals if goals is not None else []
+        self.profile = profile if profile is not None else {}
+        
     
-    def __to_dict__(user: 'User') -> dict:
+    def __to_dict__(self, user: 'User') -> dict:
         """Converts User objects to dictionary representations."""
         try:
             if not isinstance(user, User):
@@ -104,7 +89,7 @@ class User:
                 "email": user.email,
                 "password": user.password,
                 "goals": [serialize_goal(goal) for goal in user.goals],
-                "emergency_contact": [serialize_emergency_contact(contact) for contact in user.emergency_contacts],
+                "emergency_contacts": [serialize_emergency_contact(contact) for contact in user.emergency_contacts],
                 "profile": serialize_profile(user.profile)
             }
         except ValueError as e:
@@ -160,10 +145,9 @@ class User:
             raise ValueError("User ID, name, email, and password cannot be None.")
         
         user = User(user_id, name, email, password)
-        user.goals = None
         user.profile = Profile.create_profile()
-        
-        DataManager.save_to_file(user.__to_dict__(user)) # change to a saveuser implement
+        user.saveUser()
+        print(f"User {user.name} created successfully.")
         return user
 
     
@@ -179,7 +163,7 @@ class User:
 
     
     def saveUser(self) -> None:
-        """Saves the user's current information."""
+        """Saves the calling user's current information."""
         DataManager.save_to_file(self.__to_dict__(self), f"data/user_{self.user_id}.json")
         print(f"User {self.user_id} saved: Name={self.name}, Email={self.email}")
         
