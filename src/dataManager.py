@@ -43,6 +43,3 @@ class DataManager:
             #     user.profile = Profile(p["profile_id"], p["age"], p["height"], p["weight"])
             
             return data
-    
-
-    

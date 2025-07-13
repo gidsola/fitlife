@@ -40,4 +40,3 @@ class ActivityManager:
     def shareActivity(self, activity):        
         print(f"Sharing activity: {activity.activity_type} - {activity.calories_burned} calories burned")
         return True
-        

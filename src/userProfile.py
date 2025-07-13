@@ -1,7 +1,4 @@
 
-# from src.dataManager import DataManager
-# from src.user import User
-
 class Profile:
     def __init__(self, age: int, height: float, weight: float):
         self.age = age
@@ -40,44 +37,3 @@ class Profile:
     # def set_profile(self, profile):
     #     self.profile = profile
     #     print(f"Profile updated for user {self.name}.")
-    
-    
-def showProfileMenu(user):
-    print("\nProfile Menu")
-    print("1. Create Profile")
-    print("2. Update Profile")
-    print("3. View Profile")
-    print("0. Back to Main Menu")
-
-    choice = input("Select: ")
-
-    if choice == "1":
-        profile = Profile.create_profile()
-        print(f"Profile created: Age {profile.age}, Height {profile.height} cm, Weight {profile.weight} kg")
-    
-    elif choice == "2":
-        if 'profile' in globals():
-            age = input("New Age (leave blank to keep current): ")
-            height = input("New Height (cm, leave blank to keep current): ")
-            weight = input("New Weight (kg, leave blank to keep current): ")
-            profile.update_profile(age=int(age) if age else None, 
-                                   height=float(height) if height else None, 
-                                   weight=float(weight) if weight else None)
-        else:
-            print("No profile found. Please create a profile first.")
-            
-    elif choice == "3":
-        if user.profile:
-            print(user.profile)
-        else:
-            print("No profile found. Please create a profile first.")
-    
-    elif choice == "0":
-        return
-    
-    else:
-        print("Invalid option. Please try again.")
-    
-    input("Press Enter to continue...")
-    
-    

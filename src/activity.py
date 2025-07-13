@@ -1,5 +1,4 @@
 
-
 class Activity:
     def __init__(self, activity_id, activity_type, duration, calories_burned, date):
         self.activity_id = activity_id
