@@ -26,28 +26,12 @@ def loginMenu() -> 'User | ITSecurityOfficer | None':
     print("1. User Login")
     print("2. IT Security Officer Login")
     print("3. Exit")
-
     choice = input("Select an option: ")
 
     if choice == "1":
         user_id = input("User ID: ")
         password = input("Password: ")
-        
-        sys_login = Login(login_id=9999, session_token="")
-        new_login = sys_login.authenticate(user_id=int(user_id), password=password)
-        
-        if new_login is not None:
-            user = new_login.user
-            if user is None:
-                print("User not found or authentication failed.")
-                return None
-            
-            print(f"User {user.name} logged in successfully!")
-            sys_login.manageSession(user)
-            return user
-        else:
-            print("Login failed. Please check your credentials.")
-            return None
+        return Login.userLogin(user_id=user_id, password=password)
 
     elif choice == "2":
         officer_id = input("Officer ID: ")
@@ -146,7 +130,6 @@ def showUserDashboard(user: 'User | ITSecurityOfficer'):
             "8": showEmergencyContactMenu,
             "9": showProfileMenu
         }
-
         if choice in menus:
             try:
                 menus[choice](user)
@@ -155,7 +138,7 @@ def showUserDashboard(user: 'User | ITSecurityOfficer'):
         else:
             print("Invalid option. Please try again.")
 
-def showGoalsMenu(user):
+def showGoalsMenu(user: 'User'):
     while True:
         print("1. Set Goal")
         print("2. View Goal")

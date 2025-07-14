@@ -11,6 +11,7 @@ class Login:
         self.session_token = session_token
         self.user = user if user else None
 
+
     def authenticate(self, user_id: int, password: str) -> 'Login | None':
         if self.login_id != 9999:
             print("Authentication can only be performed with the system login_id (9999).")
@@ -32,3 +33,22 @@ class Login:
 
     def manageSession(self, user: 'User'):
         print(f"Managing session for user: {user.name}")
+
+    @staticmethod
+    def userLogin(user_id: str, password: str) -> 'User | None':
+        sys_login = Login(login_id=9999, session_token="")
+        new_login = sys_login.authenticate(user_id=int(user_id), password=password)
+        
+        if new_login is not None:
+            user = new_login.user
+            if user is None:
+                print("User not found or authentication failed.")
+                return None
+            
+            print(f"User {user.name} logged in successfully!")
+            sys_login.manageSession(user)
+            return user
+        else:
+            print("Login failed. Please check your credentials.")
+            return None
+    
