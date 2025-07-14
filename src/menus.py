@@ -5,7 +5,7 @@ if TYPE_CHECKING:
     from src.user import User
     from src.activityManager import ActivityManager
 
-from src.challenge import Challenge
+# from src.challenge import Challenge
 from src.deviceManager import DeviceManager
 from src.emergencyContact import EmergencyContact
 from src.fitnessTracker import FitnessTracker
@@ -126,6 +126,7 @@ def showUserDashboard(user: 'User | ITSecurityOfficer'):
         print("7. View Progress Report")
         print("8. Emergency Contact")
         print("9. Profile Management")
+        
         print("0. Exit")
 
         choice = input("Select an option: ")
@@ -153,103 +154,6 @@ def showUserDashboard(user: 'User | ITSecurityOfficer'):
                 print(f"An error occurred: {e}")
         else:
             print("Invalid option. Please try again.")
-            
-def showChallengesMenu(user):
-    challenges = []
-    while True:
-        print("\nChallenges Menu")
-        print("1. Join Challenge")
-        print("2. View Challenges")
-        print("0. Back to Social Features Menu")
-
-        choice = input("Select an option: ")
-
-        if choice == "0":
-            break
-
-        elif choice == "1":
-            challenge_name = input("Challenge name: ")
-            start_date = input("Start date (YYYY-MM-DD): ")
-            end_date = input("End date (YYYY-MM-DD): ")
-            challenge = Challenge(challenge_id=len(challenges)+1, challenge_name=challenge_name, start_date=start_date, end_date=end_date)
-            challenges.append(challenge)
-            print("Challenge joined.")
-
-        elif choice == "2":
-            if challenges:
-                for c in challenges:
-                    print(f"{c.challenge_id}: {c.challenge_name}, {c.start_date} to {c.end_date}")
-            else:
-                print("No challenges joined.")
-
-        else:
-            print("Invalid option. Please try again.")
-
-        input("Press Enter to continue...")
-        
-def showSyncMenu():
-    while True:
-            print("\n1. Sync Fitness Tracker\n2. Sync Smartwatch")
-            sub = input("Select: ")
-
-            if sub == "1":
-                brand = input("Tracker brand: ")
-                model = input("Tracker model: ")
-                tracker = FitnessTracker(tracker_id=1)
-                DeviceManager.sync_with_fitness_tracker(tracker)
-                print(f"Synced with fitness tracker: {tracker.brand} {tracker.model}")
-
-            elif sub == "2":
-                brand = input("Smartwatch brand: ")
-                model = input("Smartwatch model: ")
-                watch = Smartwatch(watch_id=1, brand=brand, model=model)
-                DeviceManager.sync_with_smartwatch(watch)
-                print(f"Synced with smartwatch: {watch.brand} {watch.model}")
-
-            input("Press Enter to continue...")
-            
-def showNotificationsMenu():
-    notifications = []
-
-    while True:
-        print("\nNotification Preferences Menu")
-        print("1. Send Notification")
-        print("2. View Notifications")
-        print("3. Customize Notification Preferences")
-        print("4. Exit")
-        sub = input("Select: ")
-
-        if sub == "1":
-            notification_type = input("Notification type: ")
-            message = input("Message: ")
-            date = input("Date (YYYY-MM-DD): ")
-            notification = Notification(
-                notification_id=len(notifications) + 1,
-                notification_type=notification_type,
-                message=message,
-                date=date
-            )
-            notifications.append(notification)
-            print("Notification sent.")
-
-        elif sub == "2":
-            if notifications:
-                for n in notifications:
-                    print(f"{n.date}: {n.notification_type} - {n.message}")
-            else:
-                print("No notifications.")
-
-        elif sub == "3":
-            nm = NotificationManager(notification_manager_id=1)
-            nm.customize_notification_preferences()
-
-        elif sub == "4":
-            break
-
-        else:
-            print("Invalid option.")
-
-        input("Press Enter to continue...")
 
 def showGoalsMenu(user):
     while True:
@@ -306,7 +210,7 @@ def showGoalsMenu(user):
         elif sub == "X" or sub.lower() == "x":
             print("Exiting goal menu.")
             break
-                
+
 def showTrackingMenu(activity_manager: 'ActivityManager'):
     while True:
             print("\nActivity Tracking Menu")    
@@ -344,7 +248,7 @@ def showTrackingMenu(activity_manager: 'ActivityManager'):
                     print("No activities tracked.")
 
             input("Press Enter to continue...")
-            
+
 def showNutritionMenu():
     nutritions = []
     while True:
@@ -352,9 +256,8 @@ def showNutritionMenu():
         print("1. Log Nutrition")
         print("2. View Nutrition Log")
         print("0. Back to Main Menu")
-        
         sub = input("Select: ")
-        
+
         if sub == "1":
             food_item = input("Food item: ")
             quantity = input("Quantity: ")
@@ -364,7 +267,7 @@ def showNutritionMenu():
             nutrition = Nutrition(nutrition_id=len(nutritions)+1, food_item=food_item, quantity=quantity, calories=calories, nutritional_values=nutritional_values)
             nutritions.append(nutrition)
             print("Nutrition logged.")
-            
+
         elif sub == "2":
             if nutritions:
                 for n in nutritions:
@@ -407,6 +310,59 @@ def showSocialMenu(user):
 
         input("Press Enter to continue...")
 
+def showFriendsMenu(user):
+    friends = []
+    while True:
+        print("\nFriends Management Menu")
+        print("1. Add Friend")
+        print("2. View Friends")
+        print("0. Back to Social Features Menu")
+
+        choice = input("Select an option: ")
+
+        if choice == "0":
+            break
+
+        elif choice == "1":
+            friend_name = input("Friend name: ")
+            friend = Friend(friend_id=len(friends)+1, friend_name=friend_name)
+            friends.append(friend)
+            print("Friend added.")
+
+        elif choice == "2":
+            if friends:
+                for f in friends:
+                    print(f"{f.friend_id}: {f.friend_name}")
+            else:
+                print("No friends added.")
+
+        else:
+            print("Invalid option. Please try again.")
+
+        input("Press Enter to continue...")
+
+def showChallengesMenu(user: 'User'):
+    while True:
+        print("\nChallenges Menu")
+        print("1. Join Challenge")
+        print("2. View Challenges")
+        print("0. Back to Social Features Menu")
+        choice = input("Select an option: ")
+        if choice == "0":
+            break
+
+        elif choice == "1":
+            challenge_name = input("Challenge name: ")
+            start_date = input("Start date (YYYY-MM-DD): ")
+            end_date = input("End date (YYYY-MM-DD): ")
+            user.social_manager.joinChallenge(challenge_name, start_date, end_date)
+
+        elif choice == "2":
+            user.social_manager.viewChallenges()
+        else:
+            print("Invalid option. Please try again.")
+        input("Press Enter to continue...")
+               
 def showLeaderboardsMenu(user):
     leaderboards = []
     while True:
@@ -435,6 +391,69 @@ def showLeaderboardsMenu(user):
 
         else:
             print("Invalid option. Please try again.")
+
+        input("Press Enter to continue...")
+
+def showSyncMenu():
+    while True:
+            print("\n1. Sync Fitness Tracker\n2. Sync Smartwatch")
+            sub = input("Select: ")
+
+            if sub == "1":
+                brand = input("Tracker brand: ")
+                model = input("Tracker model: ")
+                tracker = FitnessTracker(tracker_id=1)
+                DeviceManager.sync_with_fitness_tracker(tracker)
+                print(f"Synced with fitness tracker: {tracker.brand} {tracker.model}")
+
+            elif sub == "2":
+                brand = input("Smartwatch brand: ")
+                model = input("Smartwatch model: ")
+                watch = Smartwatch(watch_id=1, brand=brand, model=model)
+                DeviceManager.sync_with_smartwatch(watch)
+                print(f"Synced with smartwatch: {watch.brand} {watch.model}")
+
+            input("Press Enter to continue...")
+
+def showNotificationsMenu():
+    notifications = []
+    while True:
+        print("\nNotification Preferences Menu")
+        print("1. Send Notification")
+        print("2. View Notifications")
+        print("3. Customize Notification Preferences")
+        print("4. Exit")
+        sub = input("Select: ")
+
+        if sub == "1":
+            notification_type = input("Notification type: ")
+            message = input("Message: ")
+            date = input("Date (YYYY-MM-DD): ")
+            notification = Notification(
+                notification_id=len(notifications) + 1,
+                notification_type=notification_type,
+                message=message,
+                date=date
+            )
+            notifications.append(notification)
+            print("Notification sent.")
+
+        elif sub == "2":
+            if notifications:
+                for n in notifications:
+                    print(f"{n.date}: {n.notification_type} - {n.message}")
+            else:
+                print("No notifications.")
+
+        elif sub == "3":
+            nm = NotificationManager(notification_manager_id=1)
+            nm.customize_notification_preferences()
+
+        elif sub == "4":
+            break
+
+        else:
+            print("Invalid option.")
 
         input("Press Enter to continue...")
         
@@ -526,35 +545,5 @@ def showProfileMenu(user):
     
     input("Press Enter to continue...")
 
-def showFriendsMenu(user):
-    friends = []
-    while True:
-        print("\nFriends Management Menu")
-        print("1. Add Friend")
-        print("2. View Friends")
-        print("0. Back to Social Features Menu")
 
-        choice = input("Select an option: ")
-
-        if choice == "0":
-            break
-
-        elif choice == "1":
-            friend_name = input("Friend name: ")
-            friend = Friend(friend_id=len(friends)+1, friend_name=friend_name)
-            friends.append(friend)
-            print("Friend added.")
-
-        elif choice == "2":
-            if friends:
-                for f in friends:
-                    print(f"{f.friend_id}: {f.friend_name}")
-            else:
-                print("No friends added.")
-
-        else:
-            print("Invalid option. Please try again.")
-
-        input("Press Enter to continue...")
-        
         

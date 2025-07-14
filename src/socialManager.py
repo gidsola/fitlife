@@ -18,8 +18,22 @@ class SocialManager:
     def connectWithFriend(self, friend: Friend):
         print(f"Connecting with friend: {friend.friend_name}")
 
-    def join_challenge(self, challenge: Challenge):
-        print(f"Joining challenge: {challenge.challenge_name}")
+    def joinChallenge(self, challenge_name: str, start_date: str, end_date: str):
+        self.challenges.append(Challenge(
+            challenge_id=len(self.challenges)+1, 
+            challenge_name=challenge_name, 
+            start_date=start_date, 
+            end_date=end_date
+        ))
+        print("Challenge joined.")
+        
+    def viewChallenges(self):
+        if not self.challenges:
+            print("No challenges joined.")
+            return
+        print("Challenges:")
+        for challenge in self.challenges:
+            print(f"{challenge.challenge_id}: {challenge.challenge_name}, {challenge.start_date} to {challenge.end_date}")
 
     def compete_on_leaderboard(self, leaderboard: Leaderboard):
         print(f"Competing on leaderboard with metric: {leaderboard.metric}")
