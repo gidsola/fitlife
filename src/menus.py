@@ -5,7 +5,8 @@ if TYPE_CHECKING:
     from src.user import User
     from src.activityManager import ActivityManager
 
-# from src.challenge import Challenge
+from src.login import Login
+
 from src.deviceManager import DeviceManager
 from src.emergencyContact import EmergencyContact
 from src.fitnessTracker import FitnessTracker
@@ -13,7 +14,7 @@ from src.friend import Friend
 from src.goal import Goal
 from src.itSecurityOfficer import ITSecurityOfficer
 from src.leaderboard import Leaderboard
-from src.login import Login
+
 from src.notification import Notification
 from src.notificationManager import NotificationManager
 from src.nutrition import Nutrition
@@ -266,14 +267,13 @@ def showNutritionMenu():
         
         input("Press Enter to continue...")
         
-def showSocialMenu(user):
+def showSocialMenu(user: 'User'):
     while True:
         print("\nSocial Features Menu")
         print("1. Friends Management")
         print("2. Challenges")
         print("3. Leaderboards")
         print("0. Back to Main Menu")
-
         choice = input("Select an option: ")
 
         if choice == "0":
@@ -293,7 +293,7 @@ def showSocialMenu(user):
 
         input("Press Enter to continue...")
 
-def showFriendsMenu(user):
+def showFriendsMenu(user: 'User'):
     friends = []
     while True:
         print("\nFriends Management Menu")
@@ -346,7 +346,7 @@ def showChallengesMenu(user: 'User'):
             print("Invalid option. Please try again.")
         input("Press Enter to continue...")
                
-def showLeaderboardsMenu(user):
+def showLeaderboardsMenu(user: 'User'):
     leaderboards = []
     while True:
         print("\nLeaderboards Menu")
@@ -440,7 +440,7 @@ def showNotificationsMenu():
 
         input("Press Enter to continue...")
         
-def showProgressReportMenu(user):
+def showProgressReportMenu(user: 'User'):
         report_id = 1
         report_date = input("Report date (YYYY-MM-DD): ")
         report = Report(report_id=report_id, report_date=report_date, content="Progress report content")
@@ -448,7 +448,7 @@ def showProgressReportMenu(user):
         report.generate_visual_representation([1, 2, 3, 4, 5])
         input("Press Enter to continue...")
         
-def showEmergencyContactMenu(user):
+def showEmergencyContactMenu(user: 'User'):
     emergency_contacts = []
     while True:
         print("\nEmergency Contact Menu")
@@ -486,47 +486,40 @@ def showEmergencyContactMenu(user):
                     print("Invalid contact ID.")
             else:
                 print("No emergency contacts to notify.")
-
         else:
             print("Invalid option. Please try again.")
-            
-def showProfileMenu(user):
+
+def showProfileMenu(user: 'User'):
     print("\nProfile Menu")
     print("1. Create Profile")
     print("2. Update Profile")
     print("3. View Profile")
     print("0. Back to Main Menu")
-
     choice = input("Select: ")
 
     if choice == "1":
-        profile = Profile.create_profile()
+        profile = user.profile.create_profile()
         print(f"Profile created: Age {profile.age}, Height {profile.height} cm, Weight {profile.weight} kg")
-    
+
     elif choice == "2":
-        if 'profile' in globals():
-            age = input("New Age (leave blank to keep current): ")
-            height = input("New Height (cm, leave blank to keep current): ")
-            weight = input("New Weight (kg, leave blank to keep current): ")
-            profile.update_profile(age=int(age) if age else None, 
-                                   height=float(height) if height else None, 
-                                   weight=float(weight) if weight else None)
-        else:
-            print("No profile found. Please create a profile first.")
-            
+        age = input("New Age (leave blank to keep current): ")
+        height = input("New Height (cm, leave blank to keep current): ")
+        weight = input("New Weight (kg, leave blank to keep current): ")
+        user.profile.update_profile(
+            int(age) if age else None, 
+            height=float(height) if height else None, 
+            weight=float(weight) if weight else None
+        )
+
     elif choice == "3":
         if user.profile:
             print(user.profile)
         else:
-            print("No profile found. Please create a profile first.")
-    
+            print("No profile found.")
+
     elif choice == "0":
         return
-    
+
     else:
         print("Invalid option. Please try again.")
-    
     input("Press Enter to continue...")
-
-
-        

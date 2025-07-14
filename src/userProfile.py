@@ -26,7 +26,6 @@ class Profile:
     @staticmethod    
     def create_profile() -> 'Profile':
         print("Create Your Profile")
-        
         age = input("Age: ")
         height = input("Height (cm): ")
         weight = input("Weight (kg): ")
