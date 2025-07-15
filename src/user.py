@@ -40,9 +40,10 @@ class User:
         self.nutrition_manager = NutritionManager(self)
         self.report_manager = ReportManager(self)
         self.social_manager = SocialManager(self)
+        # contact manager? look at social and activity.
+        self.emergency_contacts = e_contacts if e_contacts is not None else []
         
         # isolate from non ITSecurityOfficer users?
-        self.emergency_contacts = e_contacts if e_contacts is not None else []
         self.goals = goals if goals is not None else []
         self.profile = profile if profile is not None else {}
         

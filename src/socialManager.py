@@ -10,6 +10,7 @@ from src.leaderboard import Leaderboard
 class SocialManager:
     def __init__(self, user: 'User'):
         self.user = user
+        # need to add loading saved vals(gotta save em first..)
         self.friends: list[Friend] = []
         self.challenges: list[Challenge] = []
         self.leaderboards: list[Leaderboard] = []

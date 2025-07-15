@@ -18,8 +18,6 @@ from src.leaderboard import Leaderboard
 from src.notification import Notification
 from src.notificationManager import NotificationManager
 from src.nutrition import Nutrition
-from src.userProfile import Profile
-from src.report import Report
 from src.smartwatch import Smartwatch
 
 def loginMenu() -> 'User | ITSecurityOfficer | None':
@@ -441,15 +439,15 @@ def showNotificationsMenu():
         input("Press Enter to continue...")
         
 def showProgressReportMenu(user: 'User'):
-        report_id = 1
-        report_date = input("Report date (YYYY-MM-DD): ")
-        report = Report(report_id=report_id, report_date=report_date, content="Progress report content")
-        # user.view_progress_report(report)
-        report.generate_visual_representation([1, 2, 3, 4, 5])
-        input("Press Enter to continue...")
+    #actually do something here.. anything 
+    # report_id = 1
+    # report_date = input("Report date (YYYY-MM-DD): ")
+    # report = Report(report_id=report_id, report_date=report_date, content="Progress report content")
+    # user.view_progress_report(report)
+    user.report_manager.generate_visual_representation([1, 2, 3, 4, 5])
+    input("Press Enter to continue...")
         
 def showEmergencyContactMenu(user: 'User'):
-    emergency_contacts = []
     while True:
         print("\nEmergency Contact Menu")
         print("1. Add Emergency Contact")
@@ -464,24 +462,28 @@ def showEmergencyContactMenu(user: 'User'):
             name = input("Contact Name: ")
             phone_number = input("Phone Number: ")
             relationship = input("Relationship: ")
-            contact = EmergencyContact(contact_id=len(emergency_contacts)+1, name=name, phone_number=phone_number, relationship=relationship)
-            emergency_contacts.append(contact)
-            # do the save
-            print("Emergency contact added.")
+            # this shouldn't be here, current class implement is not sensible to recieve. Possible manager needed.
+            user.emergency_contacts.append(EmergencyContact(
+                contact_id=len(user.emergency_contacts)+1, 
+                name=name, 
+                phone_number=phone_number, 
+                relationship=relationship
+            ))
 
         elif choice == "2":
-            if emergency_contacts:
-                for c in emergency_contacts:
+            if user.emergency_contacts:
+                for c in user.emergency_contacts:
                     print(f"{c.contact_id}: {c.name}, {c.phone_number}, {c.relationship}")
             else:
                 print("No emergency contacts added.")
 
         elif choice == "3":
-            if emergency_contacts:
+            if user.emergency_contacts:
                 contact_id = int(input("Enter contact ID to notify: "))
-                if 0 < contact_id <= len(emergency_contacts):
+                if 0 < contact_id <= len(user.emergency_contacts):
                     message = input("Enter message (optional): ")
-                    emergency_contacts[contact_id-1].notify_emergency_contact(message)
+                    contact = user.emergency_contacts[contact_id-1]
+                    contact.notify_emergency_contact(message)
                 else:
                     print("Invalid contact ID.")
             else:

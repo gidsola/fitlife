@@ -5,6 +5,14 @@ class EmergencyContact:
         self.name = name
         self.phone_number = phone_number
         self.relationship = relationship
+        
+    def createEmergencyContact(self, name, phone_number, relationship):
+        return EmergencyContact(
+            contact_id=len(self.user.emergency_contacts) + 1,
+            name=name,
+            phone_number=phone_number,
+            relationship=relationship
+        )
 
     def notifyContact(self, message=None):
         if not message:
