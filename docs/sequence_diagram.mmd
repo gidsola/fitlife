@@ -1,0 +1,71 @@
+---
+config:
+  theme: redux-color
+---
+sequenceDiagram
+    actor User
+    participant FitLifeApp
+    participant BackendService
+    participant DataManager
+    %% User->>FitLifeApp: Open FitLife App
+    activate FitLifeApp
+    %% FitLifeApp->>BackendService: Authenticate User
+    %% activate BackendService
+    %% BackendService-->>FitLifeApp: Authentication Success
+    %% deactivate BackendService
+    FitLifeApp->>User: Display Dashboard
+    %% deactivate FitLifeApp
+    User->>FitLifeApp: Navigate to "Goals" section
+    %% activate FitLifeApp
+    FitLifeApp->>BackendService: Request Current Goals
+    activate BackendService
+    BackendService->>DataManager: Query User Goals
+    activate DataManager
+    DataManager-->>BackendService: Return Current Goals
+    deactivate DataManager
+    BackendService-->>FitLifeApp: Display Current Goals
+    %% deactivate BackendService
+    FitLifeApp->>User: Show Current Goals
+    %% deactivate FitLifeApp
+    User->>FitLifeApp: Select "Add New Goal"
+    %% activate FitLifeApp
+    FitLifeApp->>User: Present Goal Form
+    %% deactivate FitLifeApp
+    User->>FitLifeApp: Fill Goal Information (Type, Value, Frequency, Dates)
+    %% activate FitLifeApp
+    FitLifeApp->>BackendService: Validate Goal Data
+    %% activate BackendService
+    alt Valid Data
+        BackendService->>DataManager: Save New Goal
+        activate DataManager
+        DataManager-->>BackendService: Confirm Goal Saved
+        deactivate DataManager
+        BackendService-->>FitLifeApp: Display Confirmation Message
+        %% deactivate BackendService
+        FitLifeApp->>User: Show Confirmation
+        %% deactivate FitLifeApp
+        %% activate BackendService
+        BackendService->>BackendService: Update Dashboard Data
+        BackendService->>BackendService: Generate Progress Report
+        %% deactivate BackendService
+    else Invalid Data
+        BackendService-->>FitLifeApp: Display Error Message
+        %% activate FitLifeApp
+        FitLifeApp->>User: Show Error Message
+        User->>FitLifeApp: Correct Information and Resubmit
+        FitLifeApp->>BackendService: Validate Goal Data
+        %% deactivate FitLifeApp
+        %% activate BackendService
+        deactivate BackendService
+    end
+    Note over User,FitLifeApp: Exceptions
+    alt Incomplete Profile
+        BackendService-->>FitLifeApp: Prompt to Update Profile
+        %% activate FitLifeApp
+        FitLifeApp->>User: Redirect to Profile Completion
+        %% deactivate FitLifeApp
+    else Cancel Operation
+        %% activate FitLifeApp
+        FitLifeApp->>User: Discard Unsaved Changes
+        deactivate FitLifeApp
+    end

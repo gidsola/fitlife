@@ -1,0 +1,73 @@
+---
+config:
+  theme: base
+  layout: elk
+---
+stateDiagram
+  direction TB
+  state LoginMenu {
+    direction TB
+    [*] --> SelectRole
+    SelectRole --> [*]:"3. Exit"
+  }
+  state AuthenticatingUser {
+    direction TB
+    [*] --> UserLogin:"Enter credentials"
+    UserLogin --> AuthSuccess:"Correct credentials"
+    UserLogin --> AuthFail:"Failed credentials"
+    AuthFail --> UserLogin:"Retry"
+    AuthFail --> [*]:"Retry Exceeded"
+  }
+  state AuthenticatingOfficer {
+    direction TB
+    [*] --> ITSecurityOfficerLogin:"Enter credentials"
+    ITSecurityOfficerLogin --> AuthSuccessOfficer:"Correct credentials"
+    ITSecurityOfficerLogin --> AuthFailOfficer:"Failed credentials"
+    AuthFailOfficer --> ITSecurityOfficerLogin:"Retry"
+    AuthFailOfficer --> [*]:"Retry Exceeded"
+  }
+  state UserDashboard {
+    direction TB
+    [*] --> DashboardHome
+    DashboardHome --> GoalsMenu:"Set/View Goals"
+    DashboardHome --> ActivityTrackingMenu:"Track Activity"
+    DashboardHome --> NutritionMenu:"Log Nutrition"
+    DashboardHome --> SocialMenu:"Social Features"
+    DashboardHome --> DeviceSyncMenu:"Device Sync"
+    DashboardHome --> NotificationMenu:"Notifications"
+    DashboardHome --> ProgressReportMenu:"View Progress"
+    DashboardHome --> EmergencyContactMenu:"Emergency Contact"
+    DashboardHome --> ProfileMenu:"Profile Management"
+    DashboardHome --> [*]:"Logout"
+    GoalsMenu --> DashboardHome
+    ActivityTrackingMenu --> DashboardHome
+    NutritionMenu --> DashboardHome
+    SocialMenu --> DashboardHome
+    DeviceSyncMenu --> DashboardHome
+    NotificationMenu --> DashboardHome
+    ProgressReportMenu --> DashboardHome
+    EmergencyContactMenu --> DashboardHome
+    ProfileMenu --> DashboardHome
+  }
+  state SecurityOfficerMenu {
+    direction TB
+    [*] --> ITMenuHome
+    ITMenuHome --> EnforceSecurity:"Enforce Security Policies"
+    ITMenuHome --> MonitorSecurity:"Monitor System Security"
+    ITMenuHome --> ManageEncryption:"Manage Data Encryption"
+    ITMenuHome --> AuditCompliance:"Audit Security Compliance"
+    ITMenuHome --> NewUser:"New User Creation"
+    ITMenuHome --> [*]:"Logout"
+    EnforceSecurity --> ITMenuHome
+    MonitorSecurity --> ITMenuHome
+    ManageEncryption --> ITMenuHome
+    AuditCompliance --> ITMenuHome
+    NewUser --> ITMenuHome
+  }
+  [*] --> LoginMenu
+  SelectRole --> AuthenticatingUser:"1. User Login"
+  SelectRole --> AuthenticatingOfficer:"2. ITSecurityOfficer Login"
+  AuthSuccess --> UserDashboard
+  AuthSuccessOfficer --> SecurityOfficerMenu
+  UserDashboard --> LoginMenu:"Logout"
+  SecurityOfficerMenu --> LoginMenu:"Logout"
