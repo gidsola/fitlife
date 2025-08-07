@@ -1,5 +1,8 @@
 # FitLife
+
 FitLife is a comprehensive fitness management system developed as part of an engineering project, with a focus on advancing Python proficiency through real-world application. This initial version is a command-line interface (CLI) implementation, designed as a prototype to validate features and workflows before developing a full-featured mobile application. The platform empowers users to efficiently manage their fitness journey, track progress, and achieve their health goals.
+
+For those interested in delving deeper into the technical aspects and practical implementation of the FitLife application, additional resources and code implementations are readily available. You can explore further details and access comprehensive documents through our dedicated GitHub repository. The FitLife repository offers a fully functional Command Line Interface (CLI) implementation of the FitLife application. This implementation allows users to interact with the application directly from the command line, providing a practical demonstration of how the various components and diagrams translate into actual code. By accessing the repository, you can assess the relationships between the system diagrams and the corresponding code generation, gaining insights into how theoretical designs are transformed into working software solutions. Whether you are a developer looking to contribute, a student aiming to learn, or a stakeholder interested in the technical foundation, the FitLife repository offers a transparent and accessible view of the project's codebase.
 
 ## Key Features
 
@@ -21,10 +24,12 @@ To set up FitLife locally, follow these steps:
     ```bash
     git clone https://github.com/yourusername/fitlife.git
     ```
+
 2. **Install dependencies:**
     ```bash
     pip install -r requirements.txt
     ```
+
 3. **Launch the application:**
     ```bash
     python fitlife.py
